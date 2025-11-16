@@ -13,6 +13,9 @@ use App\Http\Controllers\Admin\PermissionController;
 use App\Http\Controllers\Admin\RoleAssignController;
 use App\Http\Controllers\Admin\CountryController;
 use App\Http\Controllers\Admin\ClientController;
+use App\Http\Controllers\Admin\DomainExtensionController;
+
+
 
 
 
@@ -59,6 +62,8 @@ Route::name('admin.')
                 Route::get('/{id}/edit', [ClientController::class, 'edit'])->name('edit');
                 Route::put('/{id}', [ClientController::class, 'update'])->name('update');
                 Route::resource('categories', CategoryController::class);
+                Route::resource('domain_extensions', DomainExtensionController::class);
+
 
 
 

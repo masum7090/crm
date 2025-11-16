@@ -132,6 +132,20 @@
                     <span class="sidebar-text">Countries</span>
                 </a>
             </div>
+
+               <div class="ml-4 mt-1">
+                <a href="{{ route('admin.domain_extensions.index') }}"
+                   class="flex items-center gap-3 px-3 py-2 rounded-lg text-sm transition-colors
+        {{ request()->routeIs('admin.domain_extensions.*')
+            ? 'bg-gray-100 dark:bg-slate-700 text-primary font-medium'
+            : 'hover:bg-gray-100 dark:hover:bg-slate-700 text-gray-600 dark:text-gray-300' }}">
+                    <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M2 4h20M2 10h20M2 16h20M5 20h14" />
+                    </svg>
+                    <span class="sidebar-text">Domain Extensions</span>
+                </a>
+            </div>
+
             <div class="mb-1" data-expandable>
                 <a href="javascript:void(0)"
                     class="flex items-center gap-3 px-3 py-3 rounded-lg hover:bg-gray-100 dark:hover:bg-slate-700 text-sm transition-colors">
