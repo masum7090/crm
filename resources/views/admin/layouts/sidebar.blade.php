@@ -133,10 +133,22 @@
                 </a>
             </div>
 
-               <div class="ml-4 mt-1">
-                <a href="{{ route('admin.domain_extensions.index') }}"
+            <div class="ml-4 mt-1">
+                <a href="{{ route('admin.providers.index') }}"
                    class="flex items-center gap-3 px-3 py-2 rounded-lg text-sm transition-colors
-        {{ request()->routeIs('admin.domain_extensions.*')
+        {{ request()->routeIs('admin.providers.*')
+            ? 'bg-gray-100 dark:bg-slate-700 text-primary font-medium'
+            : 'hover:bg-gray-100 dark:hover:bg-slate-700 text-gray-600 dark:text-gray-300' }}">
+                    <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M2 4h20M2 10h20M2 16h20M5 20h14" />
+                    </svg>
+                    <span class="sidebar-text">Providers</span>
+                </a>
+            </div>
+               <div class="ml-4 mt-1">
+                <a href="{{ route('admin.domain-extensions.index') }}"
+                   class="flex items-center gap-3 px-3 py-2 rounded-lg text-sm transition-colors
+        {{ request()->routeIs('admin.domain-extensions.*')
             ? 'bg-gray-100 dark:bg-slate-700 text-primary font-medium'
             : 'hover:bg-gray-100 dark:hover:bg-slate-700 text-gray-600 dark:text-gray-300' }}">
                     <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">

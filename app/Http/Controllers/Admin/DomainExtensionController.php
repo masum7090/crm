@@ -10,14 +10,33 @@ use App\Models\DomainExtension;
 class DomainExtensionController extends Controller
 {
     /**
- 
+
      * Show all domain extensions.
      */
-    public function index()
+    public function index(Request $request)
     {
+        $query = DomainExtension::query();
 
+        // Apply filters if provided
+        if ($request->filled('extension')) {
+            $query->where('extension', 'like', '%' . $request->extension . '%');
+        }
 
-        $extensions = DomainExtension::orderBy('id', 'DESC')->paginate(20);
+        if ($request->filled('provider')) {
+            $query->where('provider', 'like', '%' . $request->provider . '%');
+        }
+
+        if ($request->filled('register_price')) {
+            $query->where('register_price', $request->register_price);
+        }
+
+        if ($request->filled('status')) {
+            $query->where('status', $request->status === 'active' ? 1 : 0);
+        }
+
+        // Paginate
+        $extensions = $query->orderBy('id', 'ASC')->paginate(20);
+
         return view('admin.domain_extensions.index', compact('extensions'));
     }
 
@@ -27,7 +46,7 @@ class DomainExtensionController extends Controller
     public function create()
     {
         return view('admin.domain_extensions.add', [
-           
+
         ]);
     }
 
@@ -38,20 +57,21 @@ class DomainExtensionController extends Controller
     {
         $request->validate([
             'extension' => 'required|string|max:10|unique:domain_extensions,extension',
-            'registration_price' => 'required|numeric|min:0',
-            'renew_price' => 'required|numeric|min:0',
-            'transfer_price' => 'required|numeric|min:0',
+            'provider' => 'nullable|string|max:100',
+            'register_price' => 'required|numeric|min:0',
+            'renewal_price' => 'required|numeric|min:0',
+            'transfer_price' => 'nullable|numeric|min:0',
             'status' => 'nullable|boolean',
         ]);
 
         DomainExtension::create([
             'extension' => $request->extension,
-            'registration_price' => $request->registration_price,
-            'renew_price' => $request->renew_price,
+            'provider' => $request->provider, // Add this
+            'register_price' => $request->register_price,
+            'renewal_price' => $request->renewal_price,
             'transfer_price' => $request->transfer_price,
-            'status' => $request->status ? 1 : 0,
+             'status'  => $request->has('status') ? 1 : 0,
         ]);
-
         return redirect()
             ->route('admin.domain-extensions.index')
             ->with('success', 'Domain extension added successfully!');
@@ -64,7 +84,7 @@ class DomainExtensionController extends Controller
     {
         $extension = DomainExtension::findOrFail($id);
 
-        return view('admin.domain_extensions.form', compact('extension'));
+        return view('admin.domain_extensions.edit', compact('extension'));
     }
 
     /**
@@ -73,19 +93,20 @@ class DomainExtensionController extends Controller
     public function update(Request $request, $id)
     {
         $extension = DomainExtension::findOrFail($id);
-
         $request->validate([
             'extension' => 'required|string|max:10|unique:domain_extensions,extension,' . $id,
-            'registration_price' => 'required|numeric|min:0',
-            'renew_price' => 'required|numeric|min:0',
+            'provider' => 'required',
+            'register_price' => 'required|numeric|min:0',
+            'renewal_price' => 'required|numeric|min:0',
             'transfer_price' => 'required|numeric|min:0',
             'status' => 'nullable|boolean',
         ]);
 
         $extension->update([
             'extension' => $request->extension,
-            'registration_price' => $request->registration_price,
-            'renew_price' => $request->renew_price,
+            'provider' => $request->provider,
+            'register_price' => $request->register_price,
+            'renewal_price' => $request->renewal_price,
             'transfer_price' => $request->transfer_price,
             'status' => $request->status ? 1 : 0,
         ]);

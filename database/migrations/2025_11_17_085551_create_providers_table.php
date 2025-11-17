@@ -11,13 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('domain_extensions', function (Blueprint $table) {
+        Schema::create('providers', function (Blueprint $table) {
             $table->id();
-            $table->string('extension', 20)->unique();
-            $table->decimal('register_price', 10, 2);
-            $table->decimal('renewal_price', 10, 2);
-            $table->decimal('transfer_price', 10, 2)->nullable();
-            $table->string('provider')->nullable();  // Namecheap, ResellerClub, Internal
+            $table->string('name')->unique();     // Provider Name, e.g., Namecheap
+            $table->string('website')->nullable(); // e.g., https://namecheap.com
+            $table->string('api_key')->nullable(); // If using their API
             $table->boolean('status')->default(true);
             $table->timestamps();
         });
@@ -28,6 +26,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('domain_extensions');
+        Schema::dropIfExists('providers');
     }
 };

@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\DashboardController;
+use App\Http\Controllers\Admin\ProviderController;
 use App\Http\Controllers\Admin\TwoFactorController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
@@ -62,11 +63,8 @@ Route::name('admin.')
                 Route::get('/{id}/edit', [ClientController::class, 'edit'])->name('edit');
                 Route::put('/{id}', [ClientController::class, 'update'])->name('update');
                 Route::resource('categories', CategoryController::class);
-                Route::resource('domain_extensions', DomainExtensionController::class);
-
-
-
-
+                Route::resource('domain-extensions', DomainExtensionController::class);
+                Route::resource('providers', ProviderController::class);
             });
         });
     });

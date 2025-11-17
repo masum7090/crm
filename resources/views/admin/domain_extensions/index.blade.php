@@ -1,8 +1,8 @@
 <x-admin-layout>
-    <x-page-header 
-        title="Domain Extensions" 
+    <x-page-header
+        title="Domain Extensions"
         description="Search and manage domain extensions."
-        :breadcrumbs="[['label' => 'Home', 'url' => route('dashboard')], ['label' => 'Domain Extensions']]" 
+        :breadcrumbs="[['label' => 'Home', 'url' => route('dashboard')], ['label' => 'Domain Extensions']]"
     />
 
     <div class="bg-white rounded-xl shadow-sm p-6 mt-6">
@@ -27,7 +27,7 @@
 
         {{-- Add Button --}}
         <div class="flex justify-between items-center mb-3">
-            <a href="{{ route('admin.domain_extensions.create') }}" 
+            <a href="{{ route('admin.domain-extensions.create') }}"
                class="bg-blue-600 text-white text-sm px-4 py-2 rounded-lg">
                 + Add Extension
             </a>
@@ -65,7 +65,7 @@
                         <td class="py-3 px-2">{{ $ext->provider ?? 'N/A' }}</td>
 
                         <td class="py-3 px-2">
-                            @if ($ext->status === 'active')
+                            @if ($ext->status)
                                 <span class="px-3 py-1 text-xs bg-green-100 text-green-700 rounded-full">ACTIVE</span>
                             @else
                                 <span class="px-3 py-1 text-xs bg-red-100 text-red-700 rounded-full">INACTIVE</span>
@@ -73,7 +73,7 @@
                         </td>
 
                         <td class="py-3 px-2 text-right">
-                            <a href="{{ route('admin.domain_extensions.edit', $ext->id) }}"
+                            <a href="{{ route('admin.domain-extensions.edit', $ext->id) }}"
                                class="text-blue-600 hover:underline">Edit</a>
                         </td>
                     </tr>
