@@ -38,12 +38,20 @@
                 />
 
                 {{-- Provider --}}
-                <x-input
-                    label="Provider (Namecheap, ResellerClub, etc.)"
-                    name="provider"
-                    :value="old('provider', $extension->provider ?? '')"
-                    placeholder="Namecheap"
-                />
+                <div>
+                    <label class="block font-medium mb-1">Provider</label>
+                    <select name="provider_id"
+                            class="w-full border-gray-300 rounded-lg shadow-sm">
+                        <option value="">Select Provider</option>
+                        @foreach($providers as $provider)
+                            <option value="{{ $provider->id }}"
+                                {{ $extension->provider_id == $provider->id ? 'selected' : '' }}>
+                                {{ $provider->name }}
+                            </option>
+                        @endforeach
+                    </select>
+                </div>
+
 
                 {{-- Register Price --}}
                 <x-input

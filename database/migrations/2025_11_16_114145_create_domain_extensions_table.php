@@ -17,7 +17,7 @@ return new class extends Migration
             $table->decimal('register_price', 10, 2);
             $table->decimal('renewal_price', 10, 2);
             $table->decimal('transfer_price', 10, 2)->nullable();
-            $table->string('provider')->nullable();  // Namecheap, ResellerClub, Internal
+            $table->unsignedBigInteger('provider_id')->nullable();
             $table->boolean('status')->default(true);
             $table->timestamps();
         });

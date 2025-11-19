@@ -12,7 +12,15 @@
 
             <x-input name="extension" placeholder=".com / .net / .xyz" />
 
-            <x-input name="provider" placeholder="Provider (Namecheap, RC)" />
+            <select name="provider_id" class="border-gray-300 rounded-lg text-sm">
+                <option value="">All Providers</option>
+                @foreach($providers as $provider)
+                    <option value="{{ $provider->id }}"
+                        {{ request('provider_id') == $provider->id ? 'selected' : '' }}>
+                        {{ $provider->name }}
+                    </option>
+                @endforeach
+            </select>
 
             <x-input name="register_price" placeholder="Register Price" />
 
@@ -62,8 +70,9 @@
                             {{ $ext->transfer_price ? number_format($ext->transfer_price, 2) : 'N/A' }}
                         </td>
 
-                        <td class="py-3 px-2">{{ $ext->provider ?? 'N/A' }}</td>
-
+                        <td class="py-3 px-2">
+                            {{ $ext->provider->name ?? 'N/A' }}
+                        </td>
                         <td class="py-3 px-2">
                             @if ($ext->status)
                                 <span class="px-3 py-1 text-xs bg-green-100 text-green-700 rounded-full">ACTIVE</span>
