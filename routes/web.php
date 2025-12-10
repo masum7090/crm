@@ -1,12 +1,17 @@
 <?php
 
 use App\Http\Controllers\Auth\SocialAuthController;
+use App\Http\Controllers\DomainSearchController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 
+//Route::get('/', function () {
+//    return view('welcome');
+//});
 Route::get('/', function () {
-    return view('welcome');
+    return view('market_place.home');
 });
+Route::post('/check-domain', [DomainSearchController::class, 'check'])->name('check.domain');
 
 Route::get('/dashboard', function () {
     return view('dashboard');
