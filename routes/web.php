@@ -12,6 +12,14 @@ Route::get('/', function () {
     return view('market_place.home');
 });
 Route::post('/check-domain', [DomainSearchController::class, 'check'])->name('check.domain');
+Route::get('/plans', function () {
+    $domain = request()->get('domain');
+    return view('market_place.partials.plans', compact('domain'));
+})->name('plans');
+
+Route::get('/checkout-page', function () {
+    return view('market_place.partials.checkout-page');
+})->name('checkout-page');
 
 Route::get('/dashboard', function () {
     return view('dashboard');
