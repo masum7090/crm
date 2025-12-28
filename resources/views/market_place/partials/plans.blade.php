@@ -132,9 +132,6 @@
                     </div>
                 </div>
 
-{{--                <button class="w-full mt-6 bg-blue-600 hover:bg-blue-700 text-white py-3 rounded-lg font-medium">--}}
-{{--                    Continue to checkout--}}
-{{--                </button>--}}
                 <a href="{{ route('checkout-page') }}"
                    class="mt-6 block w-full text-center bg-[#006CBE] text-white font-medium py-3 rounded-xl hover:bg-[#005BA2]">
                     Continue to checkout</a>

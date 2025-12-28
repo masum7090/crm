@@ -157,6 +157,21 @@
                     <span class="sidebar-text">Domain Extensions</span>
                 </a>
             </div>
+            
+             <div class="mb-1">
+                 <a href="{{ route('admin.domains.index') }}"
+                    class="flex items-center gap-3 px-3 py-2 rounded-lg text-sm transition-colors
+         {{ request()->routeIs('admin.domains.*')
+             ? 'bg-gray-100 dark:bg-slate-700 text-primary font-medium'
+             : 'hover:bg-gray-100 dark:hover:bg-slate-700 text-gray-600 dark:text-gray-300' }}">
+                     <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                         <circle cx="12" cy="12" r="10"></circle>
+                         <line x1="2" y1="12" x2="22" y2="12"></line>
+                         <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path>
+                     </svg>
+                     <span class="sidebar-text">Domains</span>
+                 </a>
+             </div>
 
             <div class="mb-1" data-expandable>
                 <a href="javascript:void(0)"
@@ -205,6 +220,47 @@
                                 <polyline points="22,6 12,13 2,6"></polyline>
                             </svg>
                             <span class="sidebar-text">Email</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="mb-1" data-expandable>
+                <a href="javascript:void(0)"
+                    class="flex items-center gap-3 px-3 py-3 rounded-lg hover:bg-gray-100 dark:hover:bg-slate-700 text-sm transition-colors">
+                    <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path>
+                        <line x1="3" y1="6" x2="21" y2="6"></line>
+                        <path d="M16 10a4 4 0 0 1-8 0"></path>
+                    </svg>
+                    <span class="flex-1 sidebar-text">Billing</span>
+                    <svg class="w-4 h-4 transition-transform sidebar-text" viewBox="0 0 24 24" fill="none"
+                        stroke="currentColor" stroke-width="2">
+                        <polyline points="6 9 12 15 18 9"></polyline>
+                    </svg>
+                </a>
+                <div class="max-h-0 overflow-hidden transition-all" data-children>
+                    <div class="ml-4 mt-1">
+                        <a href="{{ route('admin.orders.index') }}"
+                            class="flex items-center gap-3 px-3 py-2 rounded-lg text-sm transition-colors
+                            {{ request()->routeIs('admin.orders.*') ? 'bg-gray-100 dark:bg-slate-700 text-primary font-medium' : 'hover:bg-gray-100 dark:hover:bg-slate-700 text-gray-600 dark:text-gray-300' }}">
+                            <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <circle cx="9" cy="21" r="1"></circle>
+                                <circle cx="20" cy="21" r="1"></circle>
+                                <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path>
+                            </svg>
+                            <span class="sidebar-text">Orders</span>
+                        </a>
+                    </div>
+                    <div class="ml-4 mt-1">
+                        <a href="{{ route('admin.invoices.index') }}"
+                            class="flex items-center gap-3 px-3 py-2 rounded-lg text-sm transition-colors
+                            {{ request()->routeIs('admin.invoices.*') ? 'bg-gray-100 dark:bg-slate-700 text-primary font-medium' : 'hover:bg-gray-100 dark:hover:bg-slate-700 text-gray-600 dark:text-gray-300' }}">
+                            <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <rect x="2" y="5" width="20" height="14" rx="2"></rect>
+                                <line x1="2" y1="10" x2="22" y2="10"></line>
+                            </svg>
+                            <span class="sidebar-text">Invoices</span>
                         </a>
                     </div>
                 </div>

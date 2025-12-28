@@ -15,6 +15,9 @@ use App\Http\Controllers\Admin\RoleAssignController;
 use App\Http\Controllers\Admin\CountryController;
 use App\Http\Controllers\Admin\ClientController;
 use App\Http\Controllers\Admin\DomainExtensionController;
+use App\Http\Controllers\Admin\OrderController;
+use App\Http\Controllers\Admin\InvoiceController;
+use App\Http\Controllers\Admin\DomainController;
 
 
 
@@ -65,6 +68,16 @@ Route::name('admin.')
                 Route::resource('categories', CategoryController::class);
                 Route::resource('domain-extensions', DomainExtensionController::class);
                 Route::resource('providers', ProviderController::class);
+
+                // Orders & Invoices
+                Route::resource('orders', OrderController::class);
+                Route::post('orders/{order}/generate-invoice', [OrderController::class, 'generateInvoice'])->name('orders.generate-invoice');
+                
+                Route::resource('invoices', InvoiceController::class)->only(['index', 'show']);
+                Route::post('invoices/{invoice}/update-status', [InvoiceController::class, 'updateStatus'])->name('invoices.update-status');
+                
+                // Domains
+                Route::get('domains-list', [DomainController::class, 'index'])->name('domains.index');
             });
         });
     });

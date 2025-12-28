@@ -33,9 +33,9 @@
                 .then(data => {
                     console.log(data);
 
-                    if (!data.domains) {
+                    if (!data.domains || data.domains.length === 0) {
                         document.getElementById("resultsContainer").innerHTML =
-                            `<p class='text-red-600'>No data received from API.</p>`;
+                            `<p class='text-red-600 text-center'>No domain availability data found.</p>`;
                         return;
                     }
 
