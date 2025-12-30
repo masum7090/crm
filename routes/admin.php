@@ -18,6 +18,7 @@ use App\Http\Controllers\Admin\DomainExtensionController;
 use App\Http\Controllers\Admin\OrderController;
 use App\Http\Controllers\Admin\InvoiceController;
 use App\Http\Controllers\Admin\DomainController;
+use App\Http\Controllers\Admin\HostingController;
 
 
 
@@ -78,6 +79,9 @@ Route::name('admin.')
                 
                 // Domains
                 Route::get('domains-list', [DomainController::class, 'index'])->name('domains.index');
+
+                // Hosting
+                Route::resource('hosting', HostingController::class);
             });
         });
     });

@@ -58,14 +58,17 @@
                 </a>
                 <div class="max-h-0 overflow-hidden transition-all" data-children>
                     <div class="ml-4 mt-1">
-                        <a href="#"
-                            class="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-slate-700 text-sm transition-colors">
+                        <a href="{{ route('admin.clients.index') }}"
+                           class="flex items-center gap-3 px-3 py-2 rounded-lg text-sm transition-colors
+        {{ request()->routeIs('admin.clients.*')
+            ? 'bg-gray-100 dark:bg-slate-700 text-primary font-medium'
+            : 'hover:bg-gray-100 dark:hover:bg-slate-700 text-gray-600 dark:text-gray-300' }}">
                             <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                                stroke-width="2">
+                                 stroke-width="2">
                                 <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
                                 <polyline points="14 2 14 8 20 8"></polyline>
                             </svg>
-                            <span class="sidebar-text">Clint List</span>
+                            <span class="sidebar-text">Client List</span>
                         </a>
                     </div>
                     <div class="ml-4 mt-1">
@@ -92,20 +95,6 @@
                     </div>
                 </div>
             </div>
-
-<div class="ml-4 mt-1">
-    <a href="{{ route('admin.clients.index') }}"
-        class="flex items-center gap-3 px-3 py-2 rounded-lg text-sm transition-colors
-        {{ request()->routeIs('admin.clients.*')
-            ? 'bg-gray-100 dark:bg-slate-700 text-primary font-medium'
-            : 'hover:bg-gray-100 dark:hover:bg-slate-700 text-gray-600 dark:text-gray-300' }}">
-        <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <path d="M2 4h20M2 10h20M2 16h20M5 20h14" />
-        </svg>
-        <span class="sidebar-text">Clients</span>
-    </a>
-</div>
-
 
             <div class="ml-4 mt-1">
                 <a href="{{ route('admin.categories.index') }}"
@@ -145,6 +134,77 @@
                     <span class="sidebar-text">Providers</span>
                 </a>
             </div>
+            <!-- Domains -->
+            <div>
+                <button onclick="toggleMenu('domainsMenu')"
+                        class="w-full flex justify-between items-center px-4 py-2 rounded-lg hover:bg-gray-100">
+                    <span class="flex items-center gap-3">🌐 Domains</span>
+                    <span>▾</span>
+                </button>
+
+                <div id="domainsMenu" class="ml-8 mt-2 space-y-1 hidden">
+                    <a href="#" class="block px-3 py-2 rounded hover:bg-gray-100">
+                        All Domains
+                    </a>
+                    <a href="#" class="block px-3 py-2 rounded hover:bg-gray-100">
+                        Register Domain
+                    </a>
+                    <a href="#" class="block px-3 py-2 rounded hover:bg-gray-100">
+                        Transfer Domain
+                    </a>
+                    <a href="#" class="block px-3 py-2 rounded hover:bg-gray-100">
+                        DNS Management
+                    </a>
+                </div>
+            </div>
+
+            <!-- Hosting -->
+            <div>
+                <button onclick="toggleMenu('hostingMenu')"
+                        class="w-full flex justify-between items-center px-4 py-2 rounded-lg hover:bg-gray-100">
+                    <span class="flex items-center gap-3">🖥 Hosting</span>
+                    <span>▾</span>
+                </button>
+
+                <div id="hostingMenu" class="ml-8 mt-2 space-y-1 hidden">
+                    <a href="{{ route('admin.hosting.index') }}" class="block px-3 py-2 rounded hover:bg-gray-100 dark:hover:bg-slate-700">
+                        All Hosting Plans
+                    </a>
+                    <a href="{{ route('admin.hosting.create') }}" class="block px-3 py-2 rounded hover:bg-gray-100 dark:hover:bg-slate-700">
+                        Add New Plan
+                    </a>
+                    <a href="#" class="block px-3 py-2 rounded hover:bg-gray-100 dark:hover:bg-slate-700">
+                        Reseller Hosting
+                    </a>
+                </div>
+            </div>
+
+            <!-- Services -->
+            <div>
+                <button onclick="toggleMenu('servicesMenu')"
+                        class="w-full flex justify-between items-center px-4 py-2 rounded-lg hover:bg-gray-100">
+                    <span class="flex items-center gap-3">🛠 Services</span>
+                    <span>▾</span>
+                </button>
+
+                <div id="servicesMenu" class="ml-8 mt-2 space-y-1 hidden">
+                    <a href="#" class="block px-3 py-2 rounded hover:bg-gray-100">
+                        Email Hosting
+                    </a>
+                    <a href="#" class="block px-3 py-2 rounded hover:bg-gray-100">
+                        SSL Certificates
+                    </a>
+                    <a href="#" class="block px-3 py-2 rounded hover:bg-gray-100">
+                        Website Builder
+                    </a>
+                    <a href="#" class="block px-3 py-2 rounded hover:bg-gray-100">
+                        Domain Privacy
+                    </a>
+                    <a href="#" class="block px-3 py-2 rounded hover:bg-gray-100">
+                        Backup Services
+                    </a>
+                </div>
+            </div>
                <div class="ml-4 mt-1">
                 <a href="{{ route('admin.domain-extensions.index') }}"
                    class="flex items-center gap-3 px-3 py-2 rounded-lg text-sm transition-colors
@@ -157,7 +217,7 @@
                     <span class="sidebar-text">Domain Extensions</span>
                 </a>
             </div>
-            
+
              <div class="mb-1">
                  <a href="{{ route('admin.domains.index') }}"
                     class="flex items-center gap-3 px-3 py-2 rounded-lg text-sm transition-colors
@@ -361,9 +421,10 @@
                     </div>
                 </div>
             </div>
-
-
-
-
         </nav>
     </aside>
+    <script>
+        function toggleMenu(id) {
+            document.getElementById(id).classList.toggle('hidden');
+        }
+    </script>

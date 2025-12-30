@@ -7,7 +7,10 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\Client\OrderController as ClientOrderController;
 use App\Http\Controllers\Client\InvoiceController as ClientInvoiceController;
 use App\Http\Controllers\Client\PdfController;
+use App\Http\Controllers\Client\HostingController;
 use App\Http\Controllers\Client\PaymentController;
+use App\Http\Controllers\Client\CheckoutController;
+use App\Http\Controllers\ContactController;
 use Illuminate\Support\Facades\Route;
 
 //Route::get('/', function () {
@@ -22,9 +25,13 @@ Route::get('/plans', function () {
     return view('market_place.partials.plans', compact('domain'));
 })->name('plans');
 
-Route::get('/checkout-page', function () {
-    return view('market_place.partials.checkout-page');
-})->name('checkout-page');
+Route::get('/hosting', [HostingController::class, 'index'])->name('hosting.index');
+
+Route::get('/checkout-page', [CheckoutController::class, 'index'])->name('checkout-page');
+Route::post('/checkout-process', [CheckoutController::class, 'store'])->name('checkout.process');
+
+Route::get('/contact', [ContactController::class, 'index'])->name('contact');
+Route::post('/contact', [ContactController::class, 'submit'])->name('contact.submit');
 
 Route::get('/dashboard', function () {
     return view('market_place.dashboard');
