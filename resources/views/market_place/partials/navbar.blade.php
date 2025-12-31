@@ -29,7 +29,7 @@
                 </div>
             </div>
 
-            <!-- Hosting Dropdown (Enabled Submenu) -->
+            <!-- Hosting Dropdown (Enhanced Submenu) -->
             <div class="relative group">
                 <a href="{{ route('hosting.index') }}" class="flex items-center gap-1 hover:text-blue-600 transition-colors py-2">
                     Hosting
@@ -37,22 +37,57 @@
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
                     </svg>
                 </a>
-                <div class="absolute left-0 mt-0 w-64 bg-white rounded-xl shadow-xl border border-gray-100 opacity-0 invisible group-hover:opacity-100 group-hover:visible group-hover:mt-2 transition-all duration-300 z-50">
-                    <div class="py-3 px-1">
-                        <div class="px-5 py-2 mb-2 text-xs font-bold text-gray-400 uppercase tracking-widest">Our Solutions</div>
-                        <a href="{{ route('hosting.index') }}" class="flex items-center gap-3 px-5 py-3 hover:bg-blue-50 hover:text-blue-600 text-gray-700 rounded-lg transition-colors">
-                            <span class="p-2 bg-blue-100 rounded-lg text-blue-600">🌐</span>
+                <div class="absolute left-0 mt-0 w-[450px] bg-white rounded-2xl shadow-2xl border border-gray-100 opacity-0 invisible group-hover:opacity-100 group-hover:visible group-hover:mt-2 transition-all duration-300 z-50">
+                    <div class="p-4 grid grid-cols-2 gap-2">
+                        <div class="col-span-2 px-3 py-2 text-xs font-bold text-gray-400 uppercase tracking-widest">Our Hosting Solutions</div>
+                        
+                        <a href="{{ route('hosting.index') }}" class="flex items-start gap-3 p-3 hover:bg-blue-50 hover:text-blue-600 text-gray-700 rounded-xl transition-all group/item">
+                            <span class="p-2 bg-blue-100 rounded-lg text-blue-600 group-hover/item:bg-blue-600 group-hover/item:text-white transition-colors">🌐</span>
                             <div>
-                                <div class="font-bold text-sm">All Hosting Plans</div>
-                                <div class="text-[10px] opacity-70">Compare all our products</div>
+                                <div class="font-bold text-sm">All Hosting</div>
+                                <div class="text-[10px] text-gray-400">View all our products</div>
                             </div>
                         </a>
-                        <div class="h-px bg-gray-50 my-2 mx-5"></div>
-                        <a href="{{ route('hosting.index') }}#shared" class="block px-5 py-2 hover:bg-blue-50 hover:text-blue-600 text-gray-700 transition-colors">Shared Hosting</a>
-                        <a href="{{ route('hosting.index') }}#vps" class="block px-5 py-2 hover:bg-blue-50 hover:text-blue-600 text-gray-700 transition-colors">VPS Hosting</a>
-                        <a href="{{ route('hosting.index') }}#dedicated" class="block px-5 py-2 hover:bg-blue-50 hover:text-blue-600 text-gray-700 transition-colors">Dedicated Servers</a>
-                        <a href="{{ route('hosting.index') }}#reseller" class="block px-5 py-2 hover:bg-blue-50 hover:text-blue-600 text-gray-700 transition-colors">Reseller Hosting</a>
-                        <a href="{{ route('hosting.index') }}#wordpress" class="block px-5 py-2 hover:bg-blue-50 hover:text-blue-600 text-gray-700 transition-colors">WordPress Hosting</a>
+
+                        <a href="{{ route('hosting.index') }}#shared" class="flex items-start gap-3 p-3 hover:bg-indigo-50 hover:text-indigo-600 text-gray-700 rounded-xl transition-all group/item">
+                            <span class="p-2 bg-indigo-100 rounded-lg text-indigo-600 group-hover/item:bg-indigo-600 group-hover/item:text-white transition-colors">☁️</span>
+                            <div>
+                                <div class="font-bold text-sm">Shared Hosting</div>
+                                <div class="text-[10px] text-gray-400">Perfect for small sites</div>
+                            </div>
+                        </a>
+
+                        <a href="{{ route('hosting.index') }}#vps" class="flex items-start gap-3 p-3 hover:bg-purple-50 hover:text-purple-600 text-gray-700 rounded-xl transition-all group/item">
+                            <span class="p-2 bg-purple-100 rounded-lg text-purple-600 group-hover/item:bg-purple-600 group-hover/item:text-white transition-colors">⚡</span>
+                            <div>
+                                <div class="font-bold text-sm">VPS Hosting</div>
+                                <div class="text-[10px] text-gray-400">Power & flexibility</div>
+                            </div>
+                        </a>
+
+                        <a href="{{ route('hosting.index') }}#dedicated" class="flex items-start gap-3 p-3 hover:bg-red-50 hover:text-red-600 text-gray-700 rounded-xl transition-all group/item">
+                            <span class="p-2 bg-red-100 rounded-lg text-red-600 group-hover/item:bg-red-600 group-hover/item:text-white transition-colors">🛡️</span>
+                            <div>
+                                <div class="font-bold text-sm">Dedicated</div>
+                                <div class="text-[10px] text-gray-400">Ultimate performance</div>
+                            </div>
+                        </a>
+
+                        <a href="{{ route('hosting.index') }}#reseller" class="flex items-start gap-3 p-3 hover:bg-green-50 hover:text-green-600 text-gray-700 rounded-xl transition-all group/item">
+                            <span class="p-2 bg-green-100 rounded-lg text-green-600 group-hover/item:bg-green-600 group-hover/item:text-white transition-colors">🤝</span>
+                            <div>
+                                <div class="font-bold text-sm">Reseller</div>
+                                <div class="text-[10px] text-gray-400">Start your business</div>
+                            </div>
+                        </a>
+
+                        <a href="{{ route('hosting.index') }}#wordpress" class="flex items-start gap-3 p-3 hover:bg-blue-50 hover:text-blue-600 text-gray-700 rounded-xl transition-all group/item">
+                            <span class="p-2 bg-blue-100 rounded-lg text-blue-600 group-hover/item:bg-blue-600 group-hover/item:text-white transition-colors">📝</span>
+                            <div>
+                                <div class="font-bold text-sm">WordPress</div>
+                                <div class="text-[10px] text-gray-400">Optimized for WP</div>
+                            </div>
+                        </a>
                     </div>
                 </div>
             </div>
@@ -92,9 +127,6 @@
             @else
                 <a href="{{ route('login') }}" class="hidden sm:inline">
                     <button class="px-5 py-2 text-sm font-semibold hover:text-blue-600 transition-colors">Login</button>
-                </a>
-                <a href="{{ route('register') }}">
-                    <button class="px-5 py-2 rounded-xl bg-black text-white text-sm font-bold shadow-md hover:bg-gray-800 transition-all transform hover:scale-105 active:scale-95">Get Started</button>
                 </a>
             @endauth
 
@@ -137,7 +169,6 @@
                 @guest
                     <a href="{{ route('login') }}" class="w-full text-center py-3 font-bold text-gray-800 border-2 rounded-xl">Login</a>
                 @endguest
-                <a href="{{ route('register') }}" class="w-full text-center py-3 font-bold text-white bg-blue-600 rounded-xl shadow-lg">Get Started</a>
             </div>
         </div>
     </div>

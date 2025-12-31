@@ -75,6 +75,7 @@ Route::name('admin.')
                 Route::post('orders/{order}/generate-invoice', [OrderController::class, 'generateInvoice'])->name('orders.generate-invoice');
                 
                 Route::resource('invoices', InvoiceController::class)->only(['index', 'show']);
+                Route::get('invoices/{invoice}/pdf', [InvoiceController::class, 'download'])->name('invoices.pdf');
                 Route::post('invoices/{invoice}/update-status', [InvoiceController::class, 'updateStatus'])->name('invoices.update-status');
                 
                 // Domains

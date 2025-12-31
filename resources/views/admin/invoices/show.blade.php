@@ -100,10 +100,12 @@
             </div>
         </div>
 
-        {{-- Footer --}}
         <div class="mt-12 text-center text-gray-500 text-sm print:hidden flex justify-center gap-4">
+            <a href="{{ route('admin.invoices.pdf', $invoice->id) }}" class="bg-gray-800 text-white px-6 py-2 rounded-lg hover:bg-gray-700 transition font-bold shadow-md">
+                Download PDF
+            </a>
             <button onclick="window.print()" class="bg-gray-100 text-gray-700 px-6 py-2 rounded-lg hover:bg-gray-200 transition">
-                Print / Download PDF
+                Print
             </button>
             <form action="{{ route('admin.invoices.update-status', $invoice->id) }}" method="POST" class="inline-flex">
                 @csrf

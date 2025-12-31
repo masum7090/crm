@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Invoice;
 use Illuminate\Http\Request;
+use Barryvdh\DomPDF\Facade\Pdf;
 
 class InvoiceController extends Controller
 {
@@ -35,5 +36,11 @@ class InvoiceController extends Controller
         $invoice->update(['status' => $validated['status']]);
 
         return back()->with('success', 'Invoice status updated to ' . ucfirst($validated['status']));
+    }
+    public function download(Invoice $invoice)
+    {
+        $invoice->load(['order.items.product', 'order.user.info']);
+        $pdf = Pdf::loadView('market_place.invoices.pdf', compact('invoice'));
+        return $pdf->download('invoice-' . $invoice->invoice_number . '.pdf');
     }
 }
