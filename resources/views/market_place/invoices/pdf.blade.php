@@ -7,11 +7,11 @@
         @page { margin: 0px; }
         body { font-family: 'Helvetica', 'Arial', sans-serif; font-size: 13px; color: #333; margin: 0; padding: 0; line-height: 1.4; }
         .container { position: relative; padding: 40px; min-height: 1000px; }
-        
+
         /* Ribbon */
         .ribbon-wrapper { position: absolute; top: 0; right: 0; width: 150px; height: 150px; overflow: hidden; z-index: 10; }
-        .ribbon { 
-            position: relative; top: 35px; right: -45px; width: 220px; padding: 10px 0; 
+        .ribbon {
+            position: relative; top: 35px; right: -45px; width: 220px; padding: 10px 0;
             text-align: center; color: #fff; font-weight: bold; font-size: 18px; text-transform: uppercase;
             transform: rotate(45deg); box-shadow: 0 0 10px rgba(0,0,0,0.1);
         }
@@ -51,16 +51,16 @@
         /* Transactions */
         .transactions { clear: both; margin-top: 50px; }
         .transactions h3 { font-size: 16px; margin-bottom: 10px; }
-        
+
         .footer { position: absolute; bottom: 30px; width: 100%; text-align: center; color: #888; font-size: 11px; }
-        
+
         .clearfix::after { content: ""; clear: both; display: table; }
     </style>
 </head>
 <body>
-    <div class="ribbon-wrapper">
-        <div class="ribbon {{ $invoice->status }}">{{ $invoice->status }}</div>
-    </div>
+{{--    <div class="ribbon-wrapper">--}}
+{{--        <div class="ribbon {{ $invoice->status }}">{{ $invoice->status }}</div>--}}
+{{--    </div>--}}
 
     <div class="container">
         <div class="header">
@@ -99,7 +99,7 @@
             <tbody>
                 @foreach ($invoice->order->items as $item)
                     <tr>
-                        <td>{{ $item->description }} @if($item->product_id) <!-- Optional: Logic for date ranges like in demo --> @endif</td>
+                        <td>{{ $item->description ?: ($item->product ? $item->product->name : 'N/A') }} @if($item->product_id) <!-- Optional: Logic for date ranges like in demo --> @endif</td>
                         <td class="text-right">${{ number_format($item->amount, 2) }}USD</td>
                     </tr>
                 @endforeach

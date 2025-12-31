@@ -71,7 +71,7 @@
                         @foreach ($invoice->order->items as $item)
                             <tr class="border-b border-gray-50">
                                 <td class="py-4 text-gray-900">
-                                    {{ $item->description }}
+                                    {{ $item->description ?: ($item->product ? $item->product->name : 'N/A') }}
                                 </td>
                                 <td class="py-4 text-center text-gray-600">{{ $item->quantity }}</td>
                                 <td class="py-4 text-right text-gray-600">{{ number_format($item->unit_price, 2) }}</td>
