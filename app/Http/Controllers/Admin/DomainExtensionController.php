@@ -27,11 +27,11 @@ class DomainExtensionController extends Controller
         }
 
         if ($request->filled('register_price')) {
-            $query->where('register_price', $request->register_price);
+            $query->where('registration_price', $request->register_price);
         }
 
         if ($request->filled('status')) {
-            $query->where('status', $request->status === 'active' ? 1 : 0);
+            $query->where('is_active', $request->status === 'active' ? 1 : 0);
         }
 
         $extensions = $query->orderBy('id', 'ASC')->paginate(20);
@@ -68,10 +68,10 @@ class DomainExtensionController extends Controller
         DomainExtension::create([
             'extension' => $request->extension,
             'provider_id' => $request->provider_id,
-            'register_price' => $request->register_price,
+            'registration_price' => $request->register_price,
             'renewal_price' => $request->renewal_price,
             'transfer_price' => $request->transfer_price,
-            'status' => $request->has('status') ? 1 : 0,
+            'is_active' => $request->has('status') ? 1 : 0,
         ]);
 
         return redirect()
@@ -109,10 +109,10 @@ class DomainExtensionController extends Controller
         $extension->update([
             'extension' => $request->extension,
             'provider_id' => $request->provider_id,
-            'register_price' => $request->register_price,
+            'registration_price' => $request->register_price,
             'renewal_price' => $request->renewal_price,
             'transfer_price' => $request->transfer_price,
-            'status' => $request->status ? 1 : 0,
+            'is_active' => $request->has('status') ? 1 : 0,
         ]);
 
         return redirect()

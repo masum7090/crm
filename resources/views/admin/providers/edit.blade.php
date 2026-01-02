@@ -30,7 +30,7 @@
                         name="status"
                         value="active"
                         class="h-5 w-5 rounded border-gray-300"
-                        {{ old('status', $provider->status) == 'active' ? 'checked' : '' }}>
+                        {{ old('status', $provider->is_active) == 'active' ? 'checked' : '' }}>
                     <label class="text-sm font-semibold text-gray-700">Active</label>
                 </div>
             </div>

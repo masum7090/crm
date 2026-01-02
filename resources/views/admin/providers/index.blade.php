@@ -49,7 +49,7 @@
 {{--                        @endif--}}
 {{--                    </td>--}}
                     <td class="py-3 px-2">
-                        @if ($provider->status)
+                        @if ($provider->is_active)
                             <span class="px-3 py-1 text-xs bg-green-100 text-green-700 rounded-full">ACTIVE</span>
                         @else
                             <span class="px-3 py-1 text-xs bg-red-100 text-red-700 rounded-full">INACTIVE</span>

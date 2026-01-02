@@ -63,7 +63,7 @@
 
                         <td class="py-3 px-2 font-bold">{{ $ext->extension }}</td>
 
-                        <td class="py-3 px-2">{{ number_format($ext->register_price, 2) }}</td>
+                        <td class="py-3 px-2">{{ number_format($ext->registration_price, 2) }}</td>
                         <td class="py-3 px-2">{{ number_format($ext->renewal_price, 2) }}</td>
 
                         <td class="py-3 px-2">
@@ -74,7 +74,7 @@
                             {{ $ext->provider->name ?? 'N/A' }}
                         </td>
                         <td class="py-3 px-2">
-                            @if ($ext->status)
+                            @if ($ext->is_active)
                                 <span class="px-3 py-1 text-xs bg-green-100 text-green-700 rounded-full">ACTIVE</span>
                             @else
                                 <span class="px-3 py-1 text-xs bg-red-100 text-red-700 rounded-full">INACTIVE</span>

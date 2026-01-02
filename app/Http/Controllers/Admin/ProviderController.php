@@ -17,7 +17,7 @@ class ProviderController extends Controller
             $query->where('name', 'like', '%'.$request->name.'%');
         }
         if ($request->filled('status')) {
-            $query->where('status', $request->status);
+            $query->where('is_active', $request->status);
         }
 
         $providers = $query->latest()->paginate(10);
@@ -39,10 +39,11 @@ class ProviderController extends Controller
         ]);
 
         Provider::create([
-            'name'    => $request->name,
-            'website' => $request->website,
-            'api_key' => $request->api_key,
-            'status'  => $request->has('status') ? 1 : 0,
+            'name'      => $request->name,
+            'slug'      => \Illuminate\Support\Str::slug($request->name),
+            'website'   => $request->website,
+            'api_key'   => $request->api_key,
+            'is_active' => $request->has('status') ? 1 : 0,
         ]);
 
         return redirect()->route('admin.providers.index')->with('success', 'Provider added successfully.');
@@ -64,10 +65,11 @@ class ProviderController extends Controller
 
         $provider = Provider::findOrFail($id);
         $provider->update([
-            'name'    => $request->name,
-            'website' => $request->website,
-            'api_key' => $request->api_key,
-            'status'  => $request->has('status')
+            'name'      => $request->name,
+            'slug'      => \Illuminate\Support\Str::slug($request->name),
+            'website'   => $request->website,
+            'api_key'   => $request->api_key,
+            'is_active' => $request->has('status') ? 1 : 0,
         ]);
 
         return redirect()->route('admin.providers.index')->with('success', 'Provider updated successfully.');

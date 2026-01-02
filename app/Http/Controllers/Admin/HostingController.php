@@ -39,7 +39,7 @@ class HostingController extends Controller
      */
     public function create()
     {
-        $providers = Provider::where('status', 1)->get();
+        $providers = Provider::where('is_active', 1)->get();
         // Get categories to let user organize plans (e.g. Shared, VPS)
         $categories = Category::all();
         
@@ -101,7 +101,7 @@ class HostingController extends Controller
     public function edit($id)
     {
         $plan = Product::findOrFail($id);
-        $providers = Provider::where('status', 1)->get();
+        $providers = Provider::where('is_active', 1)->get();
         $categories = Category::all();
 
         return view('admin.hosting.edit', compact('plan', 'providers', 'categories'));

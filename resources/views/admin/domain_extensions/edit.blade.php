@@ -57,7 +57,7 @@
                 <x-input
                     label="Register Price"
                     name="register_price"
-                    :value="old('register_price', $extension->register_price ?? '')"
+                    :value="old('register_price', $extension->registration_price ?? '')"
                     placeholder="900.00"
                 />
 
@@ -84,7 +84,7 @@
                         name="status"
                         value="1"
                         class="h-5 w-5 rounded border-gray-300 text-red-600 focus:ring-red-500"
-                        {{ old('status', $extension->status ?? 0) == 1 ? 'checked' : '' }}
+                        {{ old('status', $extension->is_active ?? 0) == 1 ? 'checked' : '' }}
                     >
                     <label class="text-sm font-semibold text-gray-700">Active</label>
                 </div>
