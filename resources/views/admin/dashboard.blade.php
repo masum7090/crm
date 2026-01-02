@@ -9,14 +9,14 @@
             <div class="flex justify-between items-start mb-4">
                 <div class="flex-1">
                     <div class="text-sm text-gray-500 dark:text-gray-400 mb-1">Total Users</div>
-                    <div class="text-2xl font-bold">2,543</div>
+                    <div class="text-2xl font-bold">{{ number_format($total_clients) }}</div>
                     <div class="flex items-center gap-1 text-sm text-green-600 mt-2">
                         <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                             <polyline points="23 6 13.5 15.5 8.5 10.5 1 18"></polyline>
                             <polyline points="17 6 23 6 23 12"></polyline>
                         </svg>
-                        +12.5%
-                        <span class="text-gray-500 dark:text-gray-400 ml-1">from last month</span>
+                        +100%
+                        <span class="text-gray-500 dark:text-gray-400 ml-1">all time</span>
                     </div>
                 </div>
                 <div
@@ -35,15 +35,15 @@
             class="bg-white dark:bg-slate-800 border border-gray-200 dark:border-slate-700 rounded-lg p-6 shadow-sm hover:shadow-md hover:-translate-y-0.5 transition-all cursor-pointer">
             <div class="flex justify-between items-start mb-4">
                 <div class="flex-1">
-                    <div class="text-sm text-gray-500 dark:text-gray-400 mb-1">Active Projects</div>
-                    <div class="text-2xl font-bold">124</div>
+                    <div class="text-sm text-gray-500 dark:text-gray-400 mb-1">Total Orders</div>
+                    <div class="text-2xl font-bold">{{ number_format($total_orders) }}</div>
                     <div class="flex items-center gap-1 text-sm text-green-600 mt-2">
                         <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                             <polyline points="23 6 13.5 15.5 8.5 10.5 1 18"></polyline>
                             <polyline points="17 6 23 6 23 12"></polyline>
                         </svg>
-                        +8.2%
-                        <span class="text-gray-500 dark:text-gray-400 ml-1">from last month</span>
+                        Active
+                        <span class="text-gray-500 dark:text-gray-400 ml-1">orders</span>
                     </div>
                 </div>
                 <div
@@ -61,14 +61,14 @@
             <div class="flex justify-between items-start mb-4">
                 <div class="flex-1">
                     <div class="text-sm text-gray-500 dark:text-gray-400 mb-1">Total Revenue</div>
-                    <div class="text-2xl font-bold">$45,231</div>
+                    <div class="text-2xl font-bold">${{ number_format($total_revenue, 2) }}</div>
                     <div class="flex items-center gap-1 text-sm text-green-600 mt-2">
                         <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                             <polyline points="23 6 13.5 15.5 8.5 10.5 1 18"></polyline>
                             <polyline points="17 6 23 6 23 12"></polyline>
                         </svg>
-                        +15.3%
-                        <span class="text-gray-500 dark:text-gray-400 ml-1">from last month</span>
+                        Paid
+                        <span class="text-gray-500 dark:text-gray-400 ml-1">invoices</span>
                     </div>
                 </div>
                 <div
@@ -85,15 +85,16 @@
             class="bg-white dark:bg-slate-800 border border-gray-200 dark:border-slate-700 rounded-lg p-6 shadow-sm hover:shadow-md hover:-translate-y-0.5 transition-all cursor-pointer">
             <div class="flex justify-between items-start mb-4">
                 <div class="flex-1">
-                    <div class="text-sm text-gray-500 dark:text-gray-400 mb-1">Reports Generated</div>
-                    <div class="text-2xl font-bold">892</div>
-                    <div class="flex items-center gap-1 text-sm text-red-600 mt-2">
+                    <div class="text-sm text-gray-500 dark:text-gray-400 mb-1">Pending Orders</div>
+                    <div class="text-2xl font-bold">{{ number_format($pending_orders) }}</div>
+                    <div class="flex items-center gap-1 text-sm text-yellow-600 mt-2">
                         <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <polyline points="23 18 13.5 8.5 8.5 13.5 1 6"></polyline>
-                            <polyline points="17 18 23 18 23 12"></polyline>
+                            <circle cx="12" cy="12" r="10"></circle>
+                            <line x1="12" y1="8" x2="12" y2="12"></line>
+                            <line x1="12" y1="16" x2="12.01" y2="16"></line>
                         </svg>
-                        -3.1%
-                        <span class="text-gray-500 dark:text-gray-400 ml-1">from last month</span>
+                        Awaiting
+                        <span class="text-gray-500 dark:text-gray-400 ml-1">action</span>
                     </div>
                 </div>
                 <div
@@ -110,146 +111,87 @@
 
     <!-- Content Grid -->
     <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-6">
-        <!-- Chart Card -->
+        <!-- Chart Card (Keep Static for now, visualization only) -->
         <div
             class="lg:col-span-2 bg-white dark:bg-slate-800 border border-gray-200 dark:border-slate-700 rounded-lg p-6 shadow-sm">
             <div class="flex justify-between items-center mb-6">
-                <h2 class="text-lg font-semibold">Overview</h2>
-                <div class="flex gap-2">
-                    <button
-                        class="px-4 py-2 bg-primary text-white rounded-md text-sm font-medium hover:bg-primary-hover transition-colors">Week</button>
-                    <button
-                        class="px-4 py-2 bg-gray-100 dark:bg-slate-700 rounded-md text-sm font-medium hover:bg-gray-200 dark:hover:bg-slate-600 transition-colors">Month</button>
-                    <button
-                        class="px-4 py-2 bg-gray-100 dark:bg-slate-700 rounded-md text-sm font-medium hover:bg-gray-200 dark:hover:bg-slate-600 transition-colors">Year</button>
-                </div>
+                <h2 class="text-lg font-semibold">Recent Orders</h2>
+                <a href="{{ route('admin.orders.index') }}"
+                    class="px-3 py-1 bg-gray-100 dark:bg-slate-700 rounded-md text-sm font-medium hover:bg-gray-200 dark:hover:bg-slate-600 transition-colors">View
+                    All</a>
             </div>
-            <div
-                class="h-[300px] flex flex-col items-center justify-center bg-gray-100 dark:bg-slate-700 border-2 border-dashed border-gray-300 dark:border-slate-600 rounded-lg text-gray-500 dark:text-gray-400">
-                <div class="text-5xl mb-4">📊</div>
-                <p>Chart visualization</p>
-                <p class="text-xs mt-2">Integrate your preferred charting library</p>
+            
+            <div class="overflow-x-auto">
+                <table class="w-full text-left">
+                    <thead>
+                        <tr class="text-xs font-semibold text-gray-500 dark:text-gray-400 border-b border-gray-100 dark:border-slate-700">
+                            <th class="pb-3 pr-4">Order ID</th>
+                            <th class="pb-3 pr-4">Client</th>
+                            <th class="pb-3 pr-4">Total</th>
+                            <th class="pb-3 pr-4">Status</th>
+                            <th class="pb-3">Date</th>
+                        </tr>
+                    </thead>
+                    <tbody class="divide-y divide-gray-50 dark:divide-slate-700/50">
+                        @forelse($recent_orders as $order)
+                        <tr>
+                            <td class="py-4 text-sm font-medium">#{{ $order->id }}</td>
+                            <td class="py-4 text-sm text-gray-600 dark:text-gray-400">
+                                {{ $order->user->name ?? 'Deleted User' }}
+                            </td>
+                            <td class="py-4 text-sm font-bold text-gray-900 dark:text-white">
+                                ${{ number_format($order->total_amount, 2) }}
+                            </td>
+                            <td class="py-4">
+                                <span class="px-2 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider
+                                    @if($order->status == 'completed') bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-400
+                                    @elseif($order->status == 'pending') bg-yellow-100 text-yellow-700 dark:bg-yellow-900/30 dark:text-yellow-400
+                                    @else bg-gray-100 text-gray-700 dark:bg-gray-900/30 dark:text-gray-400 @endif">
+                                    {{ $order->status }}
+                                </span>
+                            </td>
+                            <td class="py-4 text-xs text-gray-500">
+                                {{ $order->created_at->diffForHumans() }}
+                            </td>
+                        </tr>
+                        @empty
+                        <tr>
+                            <td colspan="5" class="py-8 text-center text-gray-400 italic">No orders found</td>
+                        </tr>
+                        @endforelse
+                    </tbody>
+                </table>
             </div>
         </div>
 
-        <!-- Recent Activity -->
+        <!-- Recent Activity (New Users) -->
         <div class="bg-white dark:bg-slate-800 border border-gray-200 dark:border-slate-700 rounded-lg p-6 shadow-sm">
             <div class="flex justify-between items-center mb-6">
-                <h2 class="text-lg font-semibold">Recent Activity</h2>
-                <button
+                <h2 class="text-lg font-semibold">New Clients</h2>
+                <a href="{{ route('admin.clients.index') }}"
                     class="px-3 py-1 bg-gray-100 dark:bg-slate-700 rounded-md text-sm font-medium hover:bg-gray-200 dark:hover:bg-slate-600 transition-colors">View
-                    All</button>
+                    All</a>
             </div>
             <div class="flex flex-col gap-4">
+                @forelse($recent_users as $user)
                 <div
-                    class="flex gap-4 p-3 rounded-lg hover:bg-gray-100 dark:hover:bg-slate-700 transition-colors cursor-pointer">
+                    class="flex gap-4 p-3 rounded-lg hover:bg-gray-100 dark:hover:bg-slate-700 transition-colors cursor-pointer border border-transparent hover:border-gray-200 dark:hover:border-slate-600">
                     <div
                         class="w-10 h-10 rounded-full bg-blue-100 dark:bg-blue-900/30 flex items-center justify-center text-primary flex-shrink-0">
-                        <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                            stroke-width="2">
-                            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
-                            <circle cx="12" cy="7" r="4"></circle>
-                        </svg>
+                        <span class="font-bold text-xs">{{ strtoupper(substr($user->name, 0, 2)) }}</span>
                     </div>
                     <div class="flex-1 min-w-0">
-                        <div class="flex items-center gap-2 mb-1">
-                            <span class="text-sm font-medium">John Doe</span>
-                            <span
-                                class="px-2 py-0.5 rounded text-xs font-medium bg-green-100 dark:bg-green-900/30 text-green-600 dark:text-green-400">Created</span>
+                        <div class="flex items-center gap-2 mb-0.5">
+                            <span class="text-sm font-semibold text-gray-900 dark:text-white truncate">{{ $user->name }}</span>
                         </div>
-                        <p class="text-sm text-gray-500 dark:text-gray-400 truncate">New Project Alpha</p>
-                        <p class="text-xs text-gray-400 dark:text-gray-500 mt-1">2 minutes ago</p>
+                        <p class="text-xs text-gray-500 dark:text-gray-400 truncate">{{ $user->email }}</p>
+                        <p class="text-[10px] text-gray-400 dark:text-gray-500 mt-1 font-medium">{{ $user->created_at->diffForHumans() }}</p>
                     </div>
-                    <div class="w-2 h-2 rounded-full bg-green-500 flex-shrink-0 mt-2"></div>
+                    <div class="w-1.5 h-1.5 rounded-full bg-blue-500 flex-shrink-0 mt-2"></div>
                 </div>
-
-                <div
-                    class="flex gap-4 p-3 rounded-lg hover:bg-gray-100 dark:hover:bg-slate-700 transition-colors cursor-pointer">
-                    <div
-                        class="w-10 h-10 rounded-full bg-blue-100 dark:bg-blue-900/30 flex items-center justify-center text-primary flex-shrink-0">
-                        <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                            stroke-width="2">
-                            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
-                            <circle cx="12" cy="7" r="4"></circle>
-                        </svg>
-                    </div>
-                    <div class="flex-1 min-w-0">
-                        <div class="flex items-center gap-2 mb-1">
-                            <span class="text-sm font-medium">Sarah Smith</span>
-                            <span
-                                class="px-2 py-0.5 rounded text-xs font-medium bg-green-100 dark:bg-green-900/30 text-green-600 dark:text-green-400">Updated</span>
-                        </div>
-                        <p class="text-sm text-gray-500 dark:text-gray-400 truncate">User Profile</p>
-                        <p class="text-xs text-gray-400 dark:text-gray-500 mt-1">15 minutes ago</p>
-                    </div>
-                    <div class="w-2 h-2 rounded-full bg-green-500 flex-shrink-0 mt-2"></div>
-                </div>
-
-                <div
-                    class="flex gap-4 p-3 rounded-lg hover:bg-gray-100 dark:hover:bg-slate-700 transition-colors cursor-pointer">
-                    <div
-                        class="w-10 h-10 rounded-full bg-blue-100 dark:bg-blue-900/30 flex items-center justify-center text-primary flex-shrink-0">
-                        <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                            stroke-width="2">
-                            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
-                            <circle cx="12" cy="7" r="4"></circle>
-                        </svg>
-                    </div>
-                    <div class="flex-1 min-w-0">
-                        <div class="flex items-center gap-2 mb-1">
-                            <span class="text-sm font-medium">Mike Johnson</span>
-                            <span
-                                class="px-2 py-0.5 rounded text-xs font-medium bg-red-100 dark:bg-red-900/30 text-red-600 dark:text-red-400">Deleted</span>
-                        </div>
-                        <p class="text-sm text-gray-500 dark:text-gray-400 truncate">Old Report</p>
-                        <p class="text-xs text-gray-400 dark:text-gray-500 mt-1">1 hour ago</p>
-                    </div>
-                    <div class="w-2 h-2 rounded-full bg-red-500 flex-shrink-0 mt-2"></div>
-                </div>
-
-                <div
-                    class="flex gap-4 p-3 rounded-lg hover:bg-gray-100 dark:hover:bg-slate-700 transition-colors cursor-pointer">
-                    <div
-                        class="w-10 h-10 rounded-full bg-blue-100 dark:bg-blue-900/30 flex items-center justify-center text-primary flex-shrink-0">
-                        <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                            stroke-width="2">
-                            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
-                            <circle cx="12" cy="7" r="4"></circle>
-                        </svg>
-                    </div>
-                    <div class="flex-1 min-w-0">
-                        <div class="flex items-center gap-2 mb-1">
-                            <span class="text-sm font-medium">Emily Davis</span>
-                            <span
-                                class="px-2 py-0.5 rounded text-xs font-medium bg-green-100 dark:bg-green-900/30 text-green-600 dark:text-green-400">Uploaded</span>
-                        </div>
-                        <p class="text-sm text-gray-500 dark:text-gray-400 truncate">Design Files</p>
-                        <p class="text-xs text-gray-400 dark:text-gray-500 mt-1">2 hours ago</p>
-                    </div>
-                    <div class="w-2 h-2 rounded-full bg-green-500 flex-shrink-0 mt-2"></div>
-                </div>
-
-                <div
-                    class="flex gap-4 p-3 rounded-lg hover:bg-gray-100 dark:hover:bg-slate-700 transition-colors cursor-pointer">
-                    <div
-                        class="w-10 h-10 rounded-full bg-blue-100 dark:bg-blue-900/30 flex items-center justify-center text-primary flex-shrink-0">
-                        <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                            stroke-width="2">
-                            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
-                            <circle cx="12" cy="7" r="4"></circle>
-                        </svg>
-                    </div>
-                    <div class="flex-1 min-w-0">
-                        <div class="flex items-center gap-2 mb-1">
-                            <span class="text-sm font-medium">Alex Wilson</span>
-                            <span
-                                class="px-2 py-0.5 rounded text-xs font-medium bg-yellow-100 dark:bg-yellow-900/30 text-yellow-600 dark:text-yellow-400">Modified</span>
-                        </div>
-                        <p class="text-sm text-gray-500 dark:text-gray-400 truncate">Settings</p>
-                        <p class="text-xs text-gray-400 dark:text-gray-500 mt-1">3 hours ago</p>
-                    </div>
-                    <div class="w-2 h-2 rounded-full bg-yellow-500 flex-shrink-0 mt-2"></div>
-                </div>
+                @empty
+                <p class="text-center text-gray-400 italic py-4">No new clients</p>
+                @endforelse
             </div>
         </div>
     </div>
