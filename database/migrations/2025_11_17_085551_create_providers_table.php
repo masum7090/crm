@@ -14,9 +14,11 @@ return new class extends Migration
         Schema::create('providers', function (Blueprint $table) {
             $table->id();
             $table->string('name')->unique();     // Provider Name, e.g., Namecheap
+            $table->string('slug')->unique();
+            $table->text('description')->nullable();
             $table->string('website')->nullable(); // e.g., https://namecheap.com
             $table->string('api_key')->nullable(); // If using their API
-            $table->boolean('status')->default(true);
+            $table->boolean('is_active')->default(true);
             $table->timestamps();
         });
     }

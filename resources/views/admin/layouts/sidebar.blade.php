@@ -19,20 +19,6 @@
                 </a>
             </div>
 
-            <!-- Users -->
-            <div class="mb-1">
-                <a href="#"
-                    class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-all hover:bg-gray-100 dark:hover:bg-slate-700 text-gray-700 dark:text-gray-200">
-                    <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                        <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
-                        <circle cx="9" cy="7" r="4"></circle>
-                        <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
-                        <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
-                    </svg>
-                    <span class="sidebar-text">Users</span>
-                </a>
-            </div>
-
             <!-- Clients -->
             @php $isClientsActive = request()->routeIs('admin.clients.*'); @endphp
             <div class="mb-1">
@@ -92,11 +78,11 @@
             </div>
 
             <!-- Base Settings -->
-            @php 
-                $isBaseActive = request()->routeIs('admin.categories.*') || 
-                              request()->routeIs('admin.countries.*') || 
-                              request()->routeIs('admin.providers.*') || 
-                              request()->routeIs('admin.domain-extensions.*'); 
+            @php
+                $isBaseActive = request()->routeIs('admin.categories.*') ||
+                              request()->routeIs('admin.countries.*') ||
+                              request()->routeIs('admin.providers.*') ||
+                              request()->routeIs('admin.domain-extensions.*');
             @endphp
             <div class="mb-1">
                 <button onclick="toggleMenu('baseSettingsMenu')"
@@ -269,7 +255,7 @@
         function toggleMenu(id) {
             const menu = document.getElementById(id);
             const chevron = document.getElementById('chevron-' + id);
-            
+
             if (menu.classList.contains('hidden')) {
                 menu.classList.remove('hidden');
                 if (chevron) chevron.classList.remove('-rotate-90');

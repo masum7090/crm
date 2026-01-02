@@ -21,8 +21,9 @@
                 <div class="absolute left-0 mt-0 w-56 bg-white rounded-xl shadow-xl border border-gray-100 opacity-0 invisible group-hover:opacity-100 group-hover:visible group-hover:mt-2 transition-all duration-300 z-50">
                     <div class="py-3">
                         <a href="/" class="block px-6 py-2.5 hover:bg-blue-50 hover:text-blue-600 text-gray-700 transition-colors">Domain Search</a>
-                        <a href="#" class="block px-6 py-2.5 hover:bg-blue-50 hover:text-blue-600 text-gray-700 transition-colors">Domain Transfer</a>
-                        <a href="#" class="block px-6 py-2.5 hover:bg-blue-50 hover:text-blue-600 text-gray-700 transition-colors">Domain Registration</a>
+                        <a href="{{ route('domain.transfer') }}" class="block px-6 py-2.5 hover:bg-blue-50 hover:text-blue-600 text-gray-700 transition-colors">Domain Transfer</a>
+                        <a href="{{ route('domain.transfer') }}" class="block px-6 py-2.5 hover:bg-blue-50 hover:text-blue-600 text-gray-700 transition-colors">Domain Registration</a>
+                        <a href="{{ route('domain.renew') }}" class="block px-6 py-2.5 hover:bg-blue-50 hover:text-blue-600 text-gray-700 transition-colors">Renew domains</a>
                         <a href="#" class="block px-6 py-2.5 hover:bg-blue-50 hover:text-blue-600 text-gray-700 transition-colors">Bulk Domain Search</a>
                         <a href="#" class="block px-6 py-2.5 hover:bg-blue-50 hover:text-blue-600 text-gray-700 transition-colors">WHOIS Lookup</a>
                     </div>
@@ -40,7 +41,7 @@
                 <div class="absolute left-0 mt-0 w-[450px] bg-white rounded-2xl shadow-2xl border border-gray-100 opacity-0 invisible group-hover:opacity-100 group-hover:visible group-hover:mt-2 transition-all duration-300 z-50">
                     <div class="p-4 grid grid-cols-2 gap-2">
                         <div class="col-span-2 px-3 py-2 text-xs font-bold text-gray-400 uppercase tracking-widest">Our Hosting Solutions</div>
-                        
+
                         <a href="{{ route('hosting.index') }}" class="flex items-start gap-3 p-3 hover:bg-blue-50 hover:text-blue-600 text-gray-700 rounded-xl transition-all group/item">
                             <span class="p-2 bg-blue-100 rounded-lg text-blue-600 group-hover/item:bg-blue-600 group-hover/item:text-white transition-colors">🌐</span>
                             <div>
@@ -116,14 +117,17 @@
         </div>
 
         <div class="flex items-center gap-4">
-            <div class="hidden sm:flex items-center gap-2">
-                <button class="px-3 py-1 text-sm rounded-full border hover:bg-gray-50 transition-colors">🇺🇸 English</button>
-            </div>
-            
+
             @auth
-                <a href="{{ route('dashboard') }}">
-                    <button class="px-5 py-2 rounded-xl bg-blue-600 text-white text-sm font-bold shadow-md hover:bg-blue-700 transition-all transform hover:scale-105 active:scale-95">Dashboard</button>
-                </a>
+                <div class="flex items-center gap-3">
+                    <a href="{{ route('dashboard') }}">
+                        <button class="px-5 py-2 rounded-xl bg-blue-600 text-white text-sm font-bold shadow-md hover:bg-blue-700 transition-all transform hover:scale-105 active:scale-95">Dashboard</button>
+                    </a>
+                    <form method="POST" action="{{ route('logout') }}">
+                        @csrf
+                        <button type="submit" class="px-5 py-2 rounded-xl bg-white border border-gray-200 text-gray-700 text-sm font-bold shadow-sm hover:bg-gray-50 transition-all transform hover:scale-105 active:scale-95">Logout</button>
+                    </form>
+                </div>
             @else
                 <a href="{{ route('login') }}" class="hidden sm:inline">
                     <button class="px-5 py-2 text-sm font-semibold hover:text-blue-600 transition-colors">Login</button>
@@ -160,15 +164,35 @@
                     <a href="{{ route('hosting.index') }}#reseller" class="block text-gray-600 hover:text-blue-600 transition-colors">Reseller Hosting</a>
                 </div>
             </div>
-            
-            <a href="/" class="block text-lg font-bold text-gray-800">Domains</a>
+
+            <div>
+                <button onclick="toggleMobileSub('mobileDomains')" class="flex items-center justify-between w-full text-lg font-bold text-gray-800">
+                    Domains
+                    <svg class="w-5 h-5 transition-transform" id="mobileDomainsArrow" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                    </svg>
+                </button>
+                <div id="mobileDomains" class="hidden mt-4 ml-4 space-y-3 border-l-2 border-blue-100 pl-4">
+                    <a href="/" class="block text-gray-600 hover:text-blue-600 transition-colors">Domain Search</a>
+                    <a href="{{ route('domain.transfer') }}" class="block text-gray-600 hover:text-blue-600 transition-colors">Domain Transfer</a>
+                    <a href="{{ route('domain.transfer') }}" class="block text-gray-600 hover:text-blue-600 transition-colors">Domain Registration</a>
+                    <a href="{{ route('domain.renew') }}" class="block text-gray-600 hover:text-blue-600 transition-colors text-blue-600 font-bold">Renew domains</a>
+                    <a href="#" class="block text-gray-600 hover:text-blue-600 transition-colors">Whois Lookup</a>
+                </div>
+            </div>
             <a href="#" class="block text-lg font-bold text-gray-800">Services</a>
             <a href="{{ route('contact') }}" class="block text-lg font-bold text-gray-800">Contact Us</a>
-            
+
             <div class="pt-6 border-t flex flex-col gap-4">
-                @guest
+                @auth
+                    <a href="{{ route('dashboard') }}" class="w-full text-center py-3 font-bold text-white bg-blue-600 rounded-xl shadow-lg">Dashboard</a>
+                    <form method="POST" action="{{ route('logout') }}" class="w-full">
+                        @csrf
+                        <button type="submit" class="w-full text-center py-3 font-bold text-gray-800 border-2 rounded-xl">Logout</button>
+                    </form>
+                @else
                     <a href="{{ route('login') }}" class="w-full text-center py-3 font-bold text-gray-800 border-2 rounded-xl">Login</a>
-                @endguest
+                @endauth
             </div>
         </div>
     </div>
@@ -178,7 +202,7 @@
             const menu = document.getElementById('mobileMenu');
             const menuIcon = document.getElementById('menuIcon');
             const closeIcon = document.getElementById('closeIcon');
-            
+
             menu.classList.toggle('hidden');
             menuIcon.classList.toggle('hidden');
             closeIcon.classList.toggle('hidden');
@@ -187,7 +211,7 @@
         function toggleMobileSub(id) {
             const sub = document.getElementById(id);
             const arrow = document.getElementById(id + 'Arrow');
-            
+
             sub.classList.toggle('hidden');
             if (arrow) arrow.classList.toggle('rotate-180');
         }

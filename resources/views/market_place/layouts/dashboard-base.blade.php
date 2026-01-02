@@ -1,20 +1,15 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <script src="https://cdn.tailwindcss.com"></script>
-    <title>{{ $title ?? 'Marketplace' }}</title>
-</head>
-<body class="bg-white text-gray-800">
+@extends('market_place.layouts.base')
 
-{{--@include('market_place.partials.sidebar')--}}
+@section('content')
+    <div class="flex min-h-screen bg-gray-50/50">
+        <!-- Sidebar -->
+        @include('market_place.partials.sidebar')
 
-{{--<main>--}}
-{{--    @yield('content')--}}
-{{--</main>--}}
-
-@include('market_place.user_dashboard.footer')
-
-</body>
-</html>
+        <!-- Dashboard Content -->
+        <main class="flex-1 p-4 md:p-8">
+            <div class="max-w-7xl mx-auto">
+                @yield('dashboard_content')
+            </div>
+        </main>
+    </div>
+@endsection

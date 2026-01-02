@@ -11,6 +11,8 @@ use App\Http\Controllers\Client\HostingController;
 use App\Http\Controllers\Client\PaymentController;
 use App\Http\Controllers\Client\CheckoutController;
 use App\Http\Controllers\ContactController;
+use App\Http\Controllers\Client\DashboardController;
+use App\Http\Controllers\Client\DomainController;
 use Illuminate\Support\Facades\Route;
 
 //Route::get('/', function () {
@@ -20,6 +22,13 @@ Route::get('/', function () {
     return view('market_place.home');
 });
 Route::post('/check-domain', [DomainSearchController::class, 'check'])->name('check.domain');
+
+Route::post('/domain/register', [DomainController::class, 'register'])->name('domain.register');
+Route::get('/domain/transfer', [DomainController::class, 'transferView'])->name('domain.transfer');
+Route::post('/domain/transfer', [DomainController::class, 'transferProcess'])->name('domain.transfer.process');
+Route::get('/domain/renew', [DomainController::class, 'renewView'])->name('domain.renew');
+Route::post('/domain/renew', [DomainController::class, 'renewProcess'])->name('domain.renew.process');
+
 Route::get('/plans', function () {
     $domain = request()->get('domain');
     return view('market_place.partials.plans', compact('domain'));
@@ -33,9 +42,7 @@ Route::post('/checkout-process', [CheckoutController::class, 'store'])->name('ch
 Route::get('/contact', [ContactController::class, 'index'])->name('contact');
 Route::post('/contact', [ContactController::class, 'submit'])->name('contact.submit');
 
-Route::get('/dashboard', function () {
-    return view('market_place.dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
+Route::get('/dashboard', [DashboardController::class, 'index'])->middleware(['auth', 'verified'])->name('dashboard');
 Route::get('/{id}/edit', [ClientController::class, 'edit'])->name('edit');
 Route::put('/{id}', [ClientController::class, 'update'])->name('update');
 Route::middleware('auth')->group(function () {

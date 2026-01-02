@@ -51,4 +51,13 @@ class User extends Authenticatable
         return $this->hasOne(UserInfo::class);
     }
 
+    public function orders()
+    {
+        return $this->hasMany(Order::class);
+    }
+
+    public function invoices()
+    {
+        return $this->hasManyThrough(Invoice::class, Order::class);
+    }
 }

@@ -16,6 +16,15 @@ class ProfileController extends Controller
      */
     public function edit(Request $request): View
     {
+        // If user is logged in via marketplace/client dashboard
+        // We can check roles or just always show the marketplace view if they aren't in /admin prefix
+        // For now, let's show marketplace view if they are a client/customer
+        if (!$request->user()->hasRole('admin')) {
+            return view('market_place.profile.edit', [
+                'user' => $request->user(),
+            ]);
+        }
+
         return view('profile.edit', [
             'user' => $request->user(),
         ]);
@@ -33,6 +42,21 @@ class ProfileController extends Controller
         }
 
         $request->user()->save();
+
+        // Update or create UserInfo
+        $request->user()->info()->updateOrCreate(
+            ['user_id' => $request->user()->id],
+            $request->only([
+                'phone', 
+                'company_name', 
+                'address1', 
+                'address2', 
+                'city', 
+                'state_region', 
+                'postcode', 
+                'country_id'
+            ])
+        );
 
         return Redirect::route('profile.edit')->with('status', 'profile-updated');
     }

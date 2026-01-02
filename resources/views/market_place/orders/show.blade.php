@@ -1,76 +1,87 @@
 @extends('market_place.layouts.dashboard-base')
-<x-app-layout>
-    <div class="flex min-h-screen bg-gray-100">
 
-        @include('market_place.partials.sidebar')
-
-        <main class="flex-1 p-6">
-            <div class="bg-white rounded-xl shadow p-6 max-w-4xl mx-auto">
-                
-                <div class="flex justify-between items-center mb-6">
-                    <h2 class="text-xl font-semibold">Order #{{ $order->id }} Details</h2>
-                    <a href="{{ route('client.orders.index') }}" class="text-sm text-gray-500 hover:underline">← Back to Orders</a>
-                </div>
-
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
-                    <div>
-                        <h3 class="text-sm font-semibold text-gray-500 uppercase mb-2">Order Info</h3>
-                        <p><span class="font-medium">Date:</span> {{ $order->created_at->format('M d, Y') }}</p>
-                        <p><span class="font-medium">Status:</span> 
-                            <span class="px-2 py-0.5 text-xs rounded-full 
-                                {{ $order->status == 'completed' ? 'bg-green-100 text-green-700' : '' }}
-                                {{ $order->status == 'pending' ? 'bg-yellow-100 text-yellow-700' : '' }}
-                                {{ $order->status == 'cancelled' ? 'bg-red-100 text-red-700' : '' }}">
-                                {{ ucfirst($order->status) }}
-                            </span>
-                        </p>
-                    </div>
-                     <div>
-                        <h3 class="text-sm font-semibold text-gray-500 uppercase mb-2">Invoice</h3>
-                        @if ($order->invoice)
-                            <a href="{{ route('client.invoices.show', $order->invoice->id) }}" class="text-blue-600 hover:underline flex items-center gap-1">
-                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg>
-                                View Invoice #{{ $order->invoice->invoice_number }}
-                            </a>
-                        @else
-                            <span class="text-gray-400">Not generated yet</span>
-                        @endif
-                    </div>
-                </div>
-
-                <h3 class="text-lg font-semibold mb-4">Items</h3>
-                <div class="border rounded-lg overflow-hidden">
-                    <table class="w-full text-sm">
-                        <thead class="bg-gray-50">
-                            <tr class="text-left text-gray-500">
-                                <th class="py-3 px-4">Description</th>
-                                <th class="py-3 px-4 text-center">Qty</th>
-                                <th class="py-3 px-4 text-right">Price</th>
-                                <th class="py-3 px-4 text-right">Total</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @foreach ($order->items as $item)
-                                <tr class="border-t">
-                                    <td class="py-3 px-4">
-                                        <div class="font-medium text-gray-900">{{ $item->description }}</div>
-                                    </td>
-                                    <td class="py-3 px-4 text-center">{{ $item->quantity }}</td>
-                                    <td class="py-3 px-4 text-right">{{ number_format($item->unit_price, 2) }}</td>
-                                    <td class="py-3 px-4 text-right font-medium">{{ number_format($item->amount, 2) }}</td>
-                                </tr>
-                            @endforeach
-                        </tbody>
-                        <tfoot class="bg-gray-50">
-                            <tr>
-                                <td colspan="3" class="py-4 px-4 text-right font-semibold text-gray-700">Total</td>
-                                <td class="py-4 px-4 text-right font-bold text-lg text-gray-900">{{ $order->currency }} {{ number_format($order->total_amount, 2) }}</td>
-                            </tr>
-                        </tfoot>
-                    </table>
-                </div>
-
+@section('dashboard_content')
+    <div class="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden">
+        <div class="p-8 border-b border-gray-100 flex justify-between items-center">
+            <div>
+                <h2 class="text-2xl font-bold text-gray-800">Order #{{ $order->id }}</h2>
+                <p class="text-gray-500 mt-1">Placed on {{ $order->created_at->format('M d, Y at H:i') }}</p>
             </div>
-        </main>
+            <div class="flex items-center gap-4">
+                <span class="px-4 py-1.5 text-sm font-bold rounded-full 
+                    {{ $order->status == 'completed' ? 'bg-green-100 text-green-700' : '' }}
+                    {{ $order->status == 'pending' ? 'bg-yellow-101 text-yellow-700' : '' }}
+                    {{ $order->status == 'cancelled' ? 'bg-red-100 text-red-700' : '' }}">
+                    {{ strtoupper($order->status) }}
+                </span>
+                <a href="{{ route('client.orders.index') }}" class="text-sm font-semibold text-blue-600 hover:text-blue-700">
+                    &larr; Back to Orders
+                </a>
+            </div>
+        </div>
+
+        <div class="p-8">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-10 mb-10">
+                <div>
+                    <h3 class="text-xs font-black text-gray-400 uppercase tracking-widest mb-4">Billing Information</h3>
+                    <div class="text-gray-900 font-medium">{{ $order->user->name }}</div>
+                    <div class="text-gray-600 text-sm mt-1">
+                        {{ $order->user->email }}
+                    </div>
+                </div>
+                <div class="text-left md:text-right">
+                    <h3 class="text-xs font-black text-gray-400 uppercase tracking-widest mb-4">Invoice Details</h3>
+                    @if ($order->invoice)
+                        <div class="text-blue-600 font-bold hover:underline">
+                            <a href="{{ route('client.invoices.show', $order->invoice->id) }}">
+                                {{ $order->invoice->invoice_number }}
+                            </a>
+                        </div>
+                        <div class="text-gray-500 text-sm mt-1">Status: {{ ucfirst($order->invoice->status) }}</div>
+                    @else
+                        <div class="text-gray-400 italic">No invoice generated</div>
+                    @endif
+                </div>
+            </div>
+
+            <div class="rounded-2xl border border-gray-100 overflow-hidden mb-10">
+                <table class="w-full text-sm text-left">
+                    <thead class="bg-gray-50 border-b border-gray-100">
+                        <tr>
+                            <th class="px-6 py-4 font-bold text-gray-700 uppercase tracking-wider">Product / Service</th>
+                            <th class="px-6 py-4 font-bold text-gray-700 uppercase tracking-wider text-center">Qty</th>
+                            <th class="px-6 py-4 font-bold text-gray-700 uppercase tracking-wider text-right">Unit Price</th>
+                            <th class="px-6 py-4 font-bold text-gray-700 uppercase tracking-wider text-right">Total</th>
+                        </tr>
+                    </thead>
+                    <tbody class="divide-y divide-gray-100">
+                        @foreach ($order->items as $item)
+                        <tr class="hover:bg-gray-50 transition-colors">
+                            <td class="px-6 py-5">
+                                <div class="font-bold text-gray-900">{{ $item->description ?: ($item->product ? $item->product->name : 'N/A') }}</div>
+                                <div class="text-gray-400 text-xs mt-0.5">ID: {{ $item->product_id ?? 'N/A' }}</div>
+                            </td>
+                            <td class="px-6 py-5 text-center text-gray-600">{{ $item->quantity }}</td>
+                            <td class="px-6 py-5 text-right text-gray-600">{{ number_format($item->unit_price, 2) }}</td>
+                            <td class="px-6 py-5 text-right font-bold text-gray-900">{{ number_format($item->amount, 2) }}</td>
+                        </tr>
+                        @endforeach
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="flex justify-end">
+                <div class="w-full md:w-80 space-y-3">
+                    <div class="flex justify-between text-gray-600">
+                        <span>Subtotal</span>
+                        <span class="font-medium text-gray-900">{{ number_format($order->total_amount, 2) }}</span>
+                    </div>
+                    <div class="flex justify-between pt-3 border-t border-gray-100">
+                        <span class="text-lg font-black text-gray-900 uppercase">Total Amount</span>
+                        <span class="text-lg font-black text-blue-600">{{ $order->currency }} {{ number_format($order->total_amount, 2) }}</span>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
-</x-app-layout>
+@endsection

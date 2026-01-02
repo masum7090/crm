@@ -17,6 +17,7 @@ return new class extends Migration
             $table->string('status')->default('pending'); // pending, completed, cancelled
             $table->decimal('total_amount', 10, 2)->default(0);
             $table->string('currency')->default('USD');
+            $table->date('order_date')->nullable();
             $table->text('notes')->nullable();
             $table->timestamps();
 

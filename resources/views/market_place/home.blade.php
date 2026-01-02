@@ -61,7 +61,14 @@
                     </div>
 
                     ${item.available
-                            ? `<button class="mt-6 w-full bg-blue-600 text-white font-medium py-3 rounded-xl hover:bg-blue-700">Buy Now</button>`
+                            ? `
+                            <form action="{{ route('domain.register') }}" method="POST">
+                                @csrf
+                                <input type="hidden" name="domain" value="${item.domain}">
+                                <input type="hidden" name="price" value="${item.price}">
+                                <button type="submit" class="mt-6 w-full bg-blue-600 text-white font-medium py-3 rounded-xl hover:bg-blue-700">Buy Now</button>
+                            </form>
+                            `
                             : `<button disabled class="mt-6 w-full bg-gray-400 text-white font-medium py-3 rounded-xl">Unavailable</button>`
                         }
                 </div>`;

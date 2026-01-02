@@ -36,6 +36,14 @@ class RegisteredUserController extends Controller
             'name' => 'required|string|max:255',
             'email' => 'required|string|email|max:255|unique:users',
             'password' => 'required|string|min:8|confirmed',
+            'phone' => 'nullable|string|max:20',
+            'company_name' => 'nullable|string|max:255',
+            'address1' => 'nullable|string|max:255',
+            'address2' => 'nullable|string|max:255',
+            'city' => 'nullable|string|max:100',
+            'state' => 'nullable|string|max:100',
+            'postcode' => 'nullable|string|max:20',
+            'country_id' => 'nullable|exists:countries,id',
         ]);
 
         $user = User::create([
@@ -46,15 +54,15 @@ class RegisteredUserController extends Controller
 
         UserInfo::create([
             'user_id' => $user->id,
-            'phone' => $request->phone,
-            'company_name' => $request->company_name,
-            'address1' => $request->address1,
-            'address2' => $request->address2,
-            'city' => $request->city,
-            'country_id' => $request->country_id,
-            'state_region' => $request->state,
-            'postcode' => $request->postcode,
-            'currency' => $request->currency,
+            'phone' => $validated['phone'],
+            'company_name' => $validated['company_name'],
+            'address1' => $validated['address1'],
+            'address2' => $validated['address2'],
+            'city' => $validated['city'],
+            'country_id' => $validated['country_id'],
+            'state_region' => $validated['state'],
+            'postcode' => $validated['postcode'],
+            'currency' => 'USD', // Default to USD or fetch based on country if needed
         ]);
         Auth::login($user);
 

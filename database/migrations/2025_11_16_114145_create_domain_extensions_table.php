@@ -14,11 +14,11 @@ return new class extends Migration
         Schema::create('domain_extensions', function (Blueprint $table) {
             $table->id();
             $table->string('extension', 20)->unique();
-            $table->decimal('register_price', 10, 2);
+            $table->decimal('registration_price', 10, 2);
             $table->decimal('renewal_price', 10, 2);
             $table->decimal('transfer_price', 10, 2)->nullable();
             $table->unsignedBigInteger('provider_id')->nullable();
-            $table->boolean('status')->default(true);
+            $table->boolean('is_active')->default(true);
             $table->timestamps();
         });
     }

@@ -21,14 +21,14 @@
                 <a href="#" class="block px-3 py-2 rounded hover:bg-gray-100">
                     All Domains
                 </a>
-                <a href="#" class="block px-3 py-2 rounded hover:bg-gray-100">
+                <a href="{{ url('/') }}" class="block px-3 py-2 rounded hover:bg-gray-100">
                     Register Domain
                 </a>
-                <a href="#" class="block px-3 py-2 rounded hover:bg-gray-100">
+                <a href="{{ route('domain.transfer') }}" class="block px-3 py-2 rounded hover:bg-gray-100">
                     Transfer Domain
                 </a>
-                <a href="#" class="block px-3 py-2 rounded hover:bg-gray-100">
-                    DNS Management
+                <a href="{{ route('domain.renew') }}" class="block px-3 py-2 rounded hover:bg-gray-100">
+                    Renew Domain
                 </a>
             </div>
         </div>
@@ -102,10 +102,11 @@
             </div>
         </div>
 
-        <!-- Users -->
-        <a href="{{ route('admin.clients.edit', Auth::user()) }}"
-           class="flex items-center gap-3 px-4 py-2 rounded-lg hover:bg-gray-100">
-            👤 Users
+        <!-- Profile -->
+        <a href="{{ route('profile.edit') }}"
+           class="flex items-center gap-3 px-4 py-2 rounded-lg {{ request()->routeIs('profile.edit') ? 'bg-sky-600 text-white' : 'hover:bg-gray-100' }}">
+            <span>👤</span>
+            Profile
         </a>
 
         <!-- Settings -->

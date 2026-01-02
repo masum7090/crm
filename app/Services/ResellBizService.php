@@ -70,6 +70,50 @@ class ResellBizService
     }
 
     /**
+     * Purchase (Register) a domain
+     */
+    public function purchaseDomain($domain, $customer_id, $years = 1)
+    {
+        // Mocking successful response for now
+        // Actual API call: https://test.httpapi.com/api/domains/register.json
+        return [
+            'status' => 'Success',
+            'domain' => $domain,
+            'orderid' => rand(100000, 999999),
+            'actionid' => rand(100000, 999999),
+            'entityid' => rand(100000, 999999),
+        ];
+    }
+
+    /**
+     * Transfer a domain
+     */
+    public function transferDomain($domain, $auth_code, $customer_id)
+    {
+        // Mocking successful response
+        // Actual API call: https://test.httpapi.com/api/domains/transfer.json
+        return [
+            'status' => 'Success',
+            'domain' => $domain,
+            'orderid' => rand(100000, 999999),
+        ];
+    }
+
+    /**
+     * Renew a domain
+     */
+    public function renewDomain($domain, $years = 1)
+    {
+        // Mocking successful response
+        // Actual API call: https://test.httpapi.com/api/domains/renew.json
+        return [
+            'status' => 'Success',
+            'domain' => $domain,
+            'orderid' => rand(100000, 999999),
+        ];
+    }
+
+    /**
      * Format availability API response for frontend
      */
     protected function formatAvailabilityResponse($data)

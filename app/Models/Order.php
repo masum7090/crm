@@ -14,6 +14,7 @@ class Order extends Model
         'status',
         'total_amount',
         'currency',
+        'order_date',
         'notes',
     ];
 

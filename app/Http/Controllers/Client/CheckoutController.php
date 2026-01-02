@@ -78,13 +78,26 @@ class CheckoutController extends Controller
         ]);
 
         // 3. Create Order Item
+        $description = $product->name;
+        $price = $product->price;
+
+        if (session()->has('pending_domain')) {
+            $pending = session('pending_domain');
+            $description = ucfirst($pending['type']) . ": " . $pending['name'];
+            $price = $pending['price'];
+            
+            // Update order total if it was different
+            $order->update(['total_amount' => $price]);
+            session()->forget('pending_domain');
+        }
+
         OrderItem::create([
             'order_id' => $order->id,
             'product_id' => $product->id,
-            'description' => $product->name,
+            'description' => $description,
             'quantity' => 1,
-            'unit_price' => $product->price,
-            'amount' => $product->price,
+            'unit_price' => $price,
+            'amount' => $price,
         ]);
 
         // 4. Create Invoice
