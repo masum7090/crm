@@ -19,6 +19,7 @@ use App\Http\Controllers\Admin\OrderController;
 use App\Http\Controllers\Admin\InvoiceController;
 use App\Http\Controllers\Admin\DomainController;
 use App\Http\Controllers\Admin\HostingController;
+use App\Http\Controllers\Admin\DomainOrderController;
 
 
 
@@ -67,7 +68,12 @@ Route::name('admin.')
                 Route::get('/{id}/edit', [ClientController::class, 'edit'])->name('edit');
                 Route::put('/{id}', [ClientController::class, 'update'])->name('update');
                 Route::resource('categories', CategoryController::class);
-                Route::resource('domain-extensions', DomainExtensionController::class);
+                Route::get('domain-orders', [DomainOrderController::class, 'index'])->name('domain-orders.index');
+                Route::get('domain-extensions', [DomainExtensionController::class, 'index'])->name('domain-extensions.index');
+                Route::get('domain-extensions/sync', [DomainExtensionController::class, 'fetchFromProvider'])->name('domain-extensions.fetch-from-provider');
+                Route::post('domain-extensions/sync', [DomainExtensionController::class, 'storeFetched'])->name('domain-extensions.store-fetched');
+                Route::delete('domain-extensions/{id}', [DomainExtensionController::class, 'destroy'])->name('domain-extensions.destroy');
+                
                 Route::resource('providers', ProviderController::class);
 
                 // Orders & Invoices

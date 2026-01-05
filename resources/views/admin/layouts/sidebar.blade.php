@@ -142,12 +142,11 @@
                         <polyline points="6 9 12 15 18 9"></polyline>
                     </svg>
                 </button>
-                <div id="domainsMenu" class="mt-1 space-y-1 hidden">
-                    <a href="#" class="flex items-center gap-3 px-3 py-2 ml-9 rounded-lg text-sm transition-all text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white">
-                        <span>All Domains</span>
-                    </a>
-                    <a href="#" class="flex items-center gap-3 px-3 py-2 ml-9 rounded-lg text-sm transition-all text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white">
-                        <span>Register Domain</span>
+                <div id="domainsMenu" class="mt-1 space-y-1 {{ request()->routeIs('admin.domain-orders.*') ? '' : 'hidden' }}">
+                    <a href="{{ route('admin.domain-orders.index') }}"
+                       class="flex items-center gap-3 px-3 py-2 ml-9 rounded-lg text-sm transition-all
+                       {{ request()->routeIs('admin.domain-orders.*') ? 'text-blue-600 font-medium' : 'text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white' }}">
+                        <span>Managed Domains</span>
                     </a>
                 </div>
             </div>

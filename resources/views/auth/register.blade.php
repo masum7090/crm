@@ -77,9 +77,9 @@
 
             <!-- State/Region -->
             <div>
-                <x-input-label for="state" :value="__('State / Region')" />
-                <x-text-input id="state" name="state" type="text" class="mt-1 block w-full" :value="old('state')" />
-                <x-input-error class="mt-2" :messages="$errors->get('state')" />
+                <x-input-label for="state_region" :value="__('State / Region')" />
+                <x-text-input id="state_region" name="state_region" type="text" class="mt-1 block w-full" :value="old('state_region')" />
+                <x-input-error class="mt-2" :messages="$errors->get('state_region')" />
             </div>
 
             <!-- Postcode -->
