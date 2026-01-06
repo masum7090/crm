@@ -8,13 +8,13 @@ class ResellBizService
 {
     protected $userId;
     protected $apiKey;
-    protected $checkUrl = 'https://domaincheck.httpapi.com/api/domains/available.json';
-    protected $searchUrl = 'https://httpapi.com/api/domains/search.json'; // Live URL
-    protected $pricingUrl = 'https://httpapi.com/api/products/reseller-cost-price.json'; // Live URL
-    protected $tldListXmlUrl = 'https://httpapi.com/api/domains/preordering/fetchtldlist.xml'; // Live URL
-    protected $tldInPhaseXmlUrl = 'https://httpapi.com/api/domains/tlds-in-phase.xml'; // Live URL
-    protected $xmlApiUrl = 'https://api.resell.biz/xml.response'; // Primary
-    protected $xmlApiFallbackUrl = 'https://httpapi.com/api/domains/xml.response'; // Standard LogicBoxes Fallback
+    protected $checkUrl = 'https://api.resell.biz/api/domains/available.json';
+    protected $searchUrl = 'https://api.resell.biz/api/domains/search.json';
+    protected $pricingUrl = 'https://api.resell.biz/api/products/reseller-cost-price.json';
+    protected $tldListXmlUrl = 'https://api.resell.biz/api/domains/preordering/fetchtldlist.xml';
+    protected $tldInPhaseXmlUrl = 'https://api.resell.biz/api/domains/tlds-in-phase.xml';
+    protected $xmlApiUrl = 'https://api.resell.biz/xml.response'; 
+    protected $xmlApiFallbackUrl = 'https://api.resell.biz/api/domains/xml.response'; 
 
     public function __construct()
     {
@@ -50,7 +50,9 @@ class ResellBizService
 
         $finalUrl = $this->checkUrl . '?' . $queryString;
         
-        $response = Http::get($finalUrl);
+        $response = Http::withHeaders([
+            'User-Agent' => 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
+        ])->get($finalUrl);
         
         return $this->formatAvailabilityResponse($response->json());
     }
@@ -69,7 +71,9 @@ class ResellBizService
 
         $queryParams = array_merge($defaults, $params);
         
-        $response = Http::get($this->searchUrl, $queryParams);
+        $response = Http::withHeaders([
+            'User-Agent' => 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
+        ])->get($this->searchUrl, $queryParams);
         
         return $response->json();
     }
@@ -123,7 +127,10 @@ class ResellBizService
      */
     public function getTldListFromXml($category = 'services')
     {
-        $response = Http::get($this->tldListXmlUrl, [
+        $response = Http::withHeaders([
+            'User-Agent' => 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
+            'Accept' => 'application/xml, text/xml, */*',
+        ])->get($this->tldListXmlUrl, [
             'auth-userid' => $this->userId,
             'api-key' => $this->apiKey,
             'category' => $category
@@ -152,7 +159,10 @@ class ResellBizService
      */
     public function getTldsInPhase($phase = 'general_availability')
     {
-        $response = Http::get($this->tldInPhaseXmlUrl, [
+        $response = Http::withHeaders([
+            'User-Agent' => 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
+            'Accept' => 'application/xml, text/xml, */*',
+        ])->get($this->tldInPhaseXmlUrl, [
             'auth-userid' => $this->userId,
             'api-key' => $this->apiKey,
             'phase' => $phase
@@ -182,7 +192,10 @@ class ResellBizService
     public function getDomainPriceList()
     {
         try {
-            $response = Http::asForm()
+            $response = Http::withHeaders([
+                    'User-Agent' => 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
+                ])
+                ->asForm()
                 ->timeout(30) // Increased timeout
                 ->post($this->xmlApiUrl, [
                     'auth-userid' => $this->userId,
@@ -193,7 +206,10 @@ class ResellBizService
             if ($response->failed()) {
                 // If primary fails, try fallback
                 \Illuminate\Support\Facades\Log::warning('Resell.biz Primary API Failed, trying fallback...');
-                $response = Http::asForm()
+                $response = Http::withHeaders([
+                        'User-Agent' => 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
+                    ])
+                    ->asForm()
                     ->timeout(30)
                     ->post($this->xmlApiFallbackUrl, [
                         'auth-userid' => $this->userId,
@@ -230,13 +246,17 @@ class ResellBizService
     }
 
     /**
-     * Get reseller pricing for all TLDs
+     * Get reseller pricing for all TLDs with pagination
      */
-    public function getResellerPricing()
+    public function getResellerPricing($page = 1, $perPage = 50)
     {
-        $response = Http::get($this->pricingUrl, [
+        $response = Http::withHeaders([
+            'User-Agent' => 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
+        ])->get($this->pricingUrl, [
             'auth-userid' => $this->userId,
             'api-key' => $this->apiKey,
+            'no-of-records' => $perPage,
+            'page-no' => $page,
         ]);
 
         if ($response->failed()) {

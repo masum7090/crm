@@ -57,53 +57,58 @@ class DomainExtensionController extends Controller
 
     public function fetchFromProvider(\App\Services\ResellBizService $resellBizService)
     {
-        // Use the new GetDomainPriceList API command
-        $priceListData = $resellBizService->getDomainPriceList();
-        
-        // Debugging: If it's a string, it might be an error or raw XML
-        if (is_string($priceListData)) {
-            return "API RAW Response: " . htmlspecialchars($priceListData);
-        }
-
         $tlds = [];
-        // Support both numeric array and single product object
-        $products = $priceListData['product'] ?? [];
-        if (isset($products['tld'])) { $products = [$products]; } // Handle single item
+        $page = 1;
+        $perPage = 50; 
+        $maxPages = 20; // Safety limit to avoid infinite loops
+        
+        try {
+            do {
+                $pricingData = $resellBizService->getResellerPricing($page, $perPage);
+                
+                // If it's a string, it might be an error or raw XML
+                if (is_string($pricingData)) {
+                    if ($page === 1) {
+                        return "API ERROR/RAW Response: " . htmlspecialchars($pricingData);
+                    }
+                    break; 
+                }
 
-        if (!empty($products) && is_array($products)) {
-            foreach ($products as $product) {
-                // Check if it's a domain product
-                if (isset($product['tld']) || (is_array($product) && isset($product['@attributes']['tld']))) {
-                    $extension = $product['tld'] ?? $product['@attributes']['tld'];
-                    
+                $domPricing = $pricingData['domorder'] ?? [];
+                if (empty($domPricing)) {
+                    break;
+                }
+
+                foreach ($domPricing as $tld => $pricing) {
                     $tlds[] = [
-                        'extension' => ltrim($extension, '.'),
-                        'register_price' => $product['registration'] ?? $product['addnewdomain'] ?? 0,
-                        'renewal_price' => $product['renewal'] ?? $product['renewdomain'] ?? 0,
-                        'transfer_price' => $product['transfer'] ?? $product['transferdomain'] ?? 0,
+                        'extension' => ltrim($tld, '.'),
+                        'register_price' => $pricing['addnewdomain'][1] ?? 0,
+                        'renewal_price' => $pricing['renewdomain'][1] ?? 0,
+                        'transfer_price' => $pricing['transferdomain'][1] ?? 0,
                     ];
                 }
-            }
-        }
+                
+                // If the number of TLDs returned is less than perPage, we've reached the end
+                if (count($domPricing) < $perPage) {
+                    break;
+                }
+                
+                $page++;
+            } while ($page <= $maxPages);
 
-        // Fallback: If the above specific structure doesn't match, maybe it's the old structure
-        if (empty($tlds)) {
-            $pricingData = $resellBizService->getResellerPricing();
-            $domPricing = $pricingData['domorder'] ?? [];
-
-            foreach ($domPricing as $tld => $pricing) {
-                $tlds[] = [
-                    'extension' => ltrim($tld, '.'),
-                    'register_price' => $pricing['addnewdomain'][1] ?? 0,
-                    'renewal_price' => $pricing['renewdomain'][1] ?? 0,
-                    'transfer_price' => $pricing['transferdomain'][1] ?? 0,
-                ];
+        } catch (\Exception $e) {
+            \Illuminate\Support\Facades\Log::error('TLD Fetch Error: ' . $e->getMessage());
+            if (empty($tlds)) {
+                return redirect()->route('admin.domain-extensions.index')->with('error', 'Exception during TLD fetch: ' . $e->getMessage());
             }
         }
 
         if (empty($tlds)) {
              return redirect()->route('admin.domain-extensions.index')->with('error', 'No TLDs found or API connection failed. Please verify your credentials and IP whitelisting in your Resell.biz dashboard.');
         }
+
+        // Unique by extension to be safe
+        $tlds = collect($tlds)->unique('extension')->values()->all();
 
         return view('admin.domain_extensions.fetch', compact('tlds'));
     }
