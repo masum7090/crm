@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\DashboardController;
+use App\Http\Controllers\Admin\ProviderController;
 use App\Http\Controllers\Admin\TwoFactorController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
@@ -13,6 +14,14 @@ use App\Http\Controllers\Admin\PermissionController;
 use App\Http\Controllers\Admin\RoleAssignController;
 use App\Http\Controllers\Admin\CountryController;
 use App\Http\Controllers\Admin\ClientController;
+use App\Http\Controllers\Admin\DomainExtensionController;
+use App\Http\Controllers\Admin\OrderController;
+use App\Http\Controllers\Admin\InvoiceController;
+use App\Http\Controllers\Admin\DomainController;
+use App\Http\Controllers\Admin\HostingController;
+use App\Http\Controllers\Admin\DomainOrderController;
+
+
 
 
 
@@ -59,9 +68,27 @@ Route::name('admin.')
                 Route::get('/{id}/edit', [ClientController::class, 'edit'])->name('edit');
                 Route::put('/{id}', [ClientController::class, 'update'])->name('update');
                 Route::resource('categories', CategoryController::class);
+                Route::get('domain-orders', [DomainOrderController::class, 'index'])->name('domain-orders.index');
+                Route::get('domain-extensions', [DomainExtensionController::class, 'index'])->name('domain-extensions.index');
+                Route::get('domain-extensions/sync', [DomainExtensionController::class, 'fetchFromProvider'])->name('domain-extensions.fetch-from-provider');
+                Route::post('domain-extensions/sync', [DomainExtensionController::class, 'storeFetched'])->name('domain-extensions.store-fetched');
+                Route::delete('domain-extensions/{id}', [DomainExtensionController::class, 'destroy'])->name('domain-extensions.destroy');
+                
+                Route::resource('providers', ProviderController::class);
 
+                // Orders & Invoices
+                Route::resource('orders', OrderController::class);
+                Route::post('orders/{order}/generate-invoice', [OrderController::class, 'generateInvoice'])->name('orders.generate-invoice');
+                
+                Route::resource('invoices', InvoiceController::class)->only(['index', 'show']);
+                Route::get('invoices/{invoice}/pdf', [InvoiceController::class, 'download'])->name('invoices.pdf');
+                Route::post('invoices/{invoice}/update-status', [InvoiceController::class, 'updateStatus'])->name('invoices.update-status');
+                
+                // Domains
+                Route::get('domains-list', [DomainController::class, 'index'])->name('domains.index');
 
-
+                // Hosting
+                Route::resource('hosting', HostingController::class);
             });
         });
     });

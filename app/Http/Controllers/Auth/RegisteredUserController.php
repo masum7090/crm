@@ -36,6 +36,14 @@ class RegisteredUserController extends Controller
             'name' => 'required|string|max:255',
             'email' => 'required|string|email|max:255|unique:users',
             'password' => 'required|string|min:8|confirmed',
+            'phone' => 'nullable|string|max:20',
+            'company_name' => 'nullable|string|max:255',
+            'address1' => 'nullable|string|max:255',
+            'address2' => 'nullable|string|max:255',
+            'city' => 'nullable|string|max:100',
+            'state_region' => 'nullable|string|max:100',
+            'postcode' => 'nullable|string|max:20',
+            'country_id' => 'nullable|exists:countries,id',
         ]);
 
         $user = User::create([
@@ -52,9 +60,9 @@ class RegisteredUserController extends Controller
             'address2' => $request->address2,
             'city' => $request->city,
             'country_id' => $request->country_id,
-            'state_region' => $request->state,
+            'state_region' => $request->state_region,
             'postcode' => $request->postcode,
-            'currency' => $request->currency,
+            'currency' => 'USD',
         ]);
         Auth::login($user);
 

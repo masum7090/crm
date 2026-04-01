@@ -1,2 +1,1 @@
-<h1>welcwwome</h1>
-<data value=""></data>
+@include('market_place.home')
